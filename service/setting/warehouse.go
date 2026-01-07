@@ -22,8 +22,8 @@ type QueryWarehouseReq struct {
 }
 
 type QueryWarehouseResp struct {
-	Details    []WarehouseDetail `json:"details"`
-	TotalCount int64             `json:"total_count"`
+	Details    []*WarehouseDetail `json:"details"`
+	TotalCount int64              `json:"total_count"`
 }
 
 type WarehouseDetail struct {
@@ -49,7 +49,7 @@ type WarehouseDetail struct {
 	PurchaseAddress string `json:"purchase_address"` //	采购联系地址
 }
 
-func (w warehouse) QueryWarehouse(ctx context.Context, req QueryWarehouseReq, options ...core.ReqOptionFunc) (*QueryWarehouseResp, error) {
+func (w warehouse) QueryWarehouse(ctx context.Context, req *QueryWarehouseReq, options ...core.ReqOptionFunc) (*QueryWarehouseResp, error) {
 	apiReq := &core.ApiReq{
 		HttpMethod: http.MethodPost,
 		Method:     "setting.Warehouse.queryWarehouse",

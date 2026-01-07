@@ -39,8 +39,8 @@ type QueryStockPdInDetailReq struct {
 }
 
 type QueryStockPdInDetailResp struct {
-	Order      []StockPdInOrder `json:"order"`
-	TotalCount int64            `json:"total_count"`
+	Order      []*StockPdInOrder `json:"order"`
+	TotalCount int64             `json:"total_count"`
 }
 
 type StockPdInOrder struct {
@@ -82,7 +82,7 @@ func (s *stockpd) QueryStockPdInDetail(ctx context.Context, req *QueryStockPdInD
 	})
 }
 
-type QueryStockPdOutReq struct {
+type QueryStockPdOutDetailReq struct {
 	StartTime   string `json:"start_time"`             // 开始时间
 	EndTime     string `json:"end_time"`               // 结束时间
 	TimeType    int    `json:"time_type,omitempty"`    // 时间类型
@@ -93,8 +93,8 @@ type QueryStockPdOutReq struct {
 }
 
 type QueryStockPdOutDetailResp struct {
-	Order      []StockPdInOrder `json:"order"`
-	TotalCount int64            `json:"total_count"`
+	Order      []*StockPdOutOrder `json:"order"`
+	TotalCount int64              `json:"total_count"`
 }
 
 type StockPdOutOrder struct {
@@ -132,7 +132,7 @@ type StockPdOutOrder struct {
 
 // QueryStockPdOutDetail 盘点出库单查询
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=wms.StockPd.queryStockPdOutDetail
-func (s *stockpd) QueryStockPdOutDetail(ctx context.Context, req *QueryStockPdOutReq, options ...core.ReqOptionFunc) (*QueryStockPdOutDetailResp, error) {
+func (s *stockpd) QueryStockPdOutDetail(ctx context.Context, req *QueryStockPdOutDetailReq, options ...core.ReqOptionFunc) (*QueryStockPdOutDetailResp, error) {
 	apiReq := &core.ApiReq{
 		HttpMethod: http.MethodPost,
 		Method:     "wms.StockPd.queryStockPdOutDetail",
