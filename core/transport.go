@@ -98,7 +98,7 @@ func Request(ctx context.Context, apiReq *ApiReq, config *Config, options ...Req
 	values.Del("body")
 
 	url := config.BaseUrl + "?" + values.Encode()
-	slog.Debug("request", "url", url)
+	slog.Debug(apiReq.HttpMethod, "url", url, "body", string(body))
 	req, err := http.NewRequestWithContext(ctx, apiReq.HttpMethod, url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err

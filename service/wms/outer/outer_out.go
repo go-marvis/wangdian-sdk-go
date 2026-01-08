@@ -14,7 +14,7 @@ type outerOut struct {
 type QueryOuterOutReq struct {
 	StartTime   string `json:"start_time"`             // 开始时间
 	EndTime     string `json:"end_time"`               // 结束时间
-	OuterOutNo  string `json:"outer_out_no"`           // 出库单号
+	OuterOutNo  string `json:"outer_out_no,omitempty"` // 出库单号
 	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
 	TimeType    int    `json:"time_type,omitempty"`    // 时间类型  1为建单时间，2为修改时间，默认为建单时间
 	LogisticsNo string `json:"logistics_no,omitempty"` // 物流单号

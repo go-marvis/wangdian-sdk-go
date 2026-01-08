@@ -12,7 +12,7 @@ type outerIn struct {
 }
 
 type QueryOuterInReq struct {
-	OuterInNo    string `json:"outer_in_no"`              // 入库单号
+	OuterInNo    string `json:"outer_in_no,omitempty"`    // 入库单号
 	WarehouseNo  string `json:"warehouse_no,omitempty"`   // 仓库编号
 	StartTime    string `json:"start_time"`               // 开始时间
 	EndTime      string `json:"end_time"`                 // 结束时间
