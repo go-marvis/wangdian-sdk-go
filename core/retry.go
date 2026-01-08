@@ -14,11 +14,14 @@ func Retry[T any](ctx context.Context, config *Config, f func() (*ApiResp, error
 		resp    Response[T]
 		err     error
 		apiResp *ApiResp
+		maxTry  = config.Retry + 1
 	)
 
-	for range config.Retry {
-		if err = config.Limiter.Wait(ctx); err != nil {
-			return nil, err
+	for range maxTry {
+		if config.Limiter != nil {
+			if err = config.Limiter.Wait(ctx); err != nil {
+				return nil, err
+			}
 		}
 
 		apiResp, err = f()

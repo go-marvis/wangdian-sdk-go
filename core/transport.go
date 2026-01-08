@@ -19,22 +19,6 @@ const (
 	defaultContentType = "application/json; charset=utf-8"
 )
 
-func NewHttpClient(config *Config) {
-	if config.HttpClient == nil {
-		if config.ReqTimeout == 0 {
-			config.HttpClient = http.DefaultClient
-		} else {
-			config.HttpClient = &http.Client{Timeout: config.ReqTimeout}
-		}
-	}
-}
-
-func NewSerializer(config *Config) {
-	if config.Serializer == nil {
-		config.Serializer = &defaultSerializer{}
-	}
-}
-
 func doSend(client HttpClient, req *http.Request) (*ApiResp, error) {
 
 	if client == nil {
