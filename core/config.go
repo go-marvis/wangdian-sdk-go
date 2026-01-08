@@ -26,7 +26,6 @@ type Config struct {
 }
 
 func Init(config *Config) {
-
 	if config.HttpClient == nil {
 		if config.ReqTimeout == 0 {
 			config.HttpClient = http.DefaultClient

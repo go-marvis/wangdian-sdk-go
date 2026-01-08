@@ -14,8 +14,7 @@ type Client struct {
 }
 
 func NewClient(config *core.Config) *Client {
-	core.NewHttpClient(config)
-	core.NewSerializer(config)
+	core.SetDefault(config)
 
 	return &Client{
 		AfterSales: aftersales.NewService(config),
