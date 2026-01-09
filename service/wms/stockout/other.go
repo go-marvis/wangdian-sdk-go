@@ -72,7 +72,7 @@ type OtherOrder struct {
 		CostPrice           float64          `json:"cost_price,omitempty"`   // 成本价
 		Weight              float64          `json:"weight,omitempty"`       // 总重量
 		GoodsType           int              `json:"goods_type"`             // 货品类型
-		UnitName            string           `json:"unit_name"`              // 单位
+		UnitName            string           `json:"unit_name,omitempty"`    // 单位
 		BaseUnitId          int              `json:"base_unit_id"`           // 单位id
 		BatchNo             string           `json:"batch_no"`               // 批次号
 		PositionId          int              `json:"position_id,omitempty"`  // 货位id

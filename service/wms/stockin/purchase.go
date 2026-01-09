@@ -49,34 +49,34 @@ type PurchaseOrder struct {
 	FlagName          string  `json:"flag_name"`           // 标记名称
 	OperatorName      string  `json:"operator_name"`       // 经办人
 	DetailsList       []struct {
-		RecId            int64   `json:"rec_id"`                  // 入库单明细id
-		Num              float64 `json:"num"`                     // 数量
-		Discount         float64 `json:"discount"`                // 折扣
-		CostPrice        float64 `json:"cost_price,omitempty"`    // 税前单价
-		SrcPrice         float64 `json:"src_price,omitempty"`     // 税前折后单价
-		TaxPrice         float64 `json:"tax_price,omitempty"`     // 税后单价（折后）
-		TaxAmount        float64 `json:"tax_amount,omitempty"`    // 税后金额（税后总价）
-		Tax              float64 `json:"tax,omitempty"`           // 税率
-		TotalCost        float64 `json:"total_cost,omitempty"`    // 税前金额（税前总价）
-		Remark           string  `json:"remark,omitempty"`        // 入库单明细备注
-		GoodsName        string  `json:"goods_name"`              // 货品名称
-		GoodsNo          string  `json:"goods_no"`                // 货品编号
-		SpecNo           string  `json:"spec_no,omitempty"`       // 商家编码
-		SpecCode         string  `json:"spec_code,omitempty"`     // 规格码
-		SpecName         string  `json:"spec_name,omitempty"`     // 规格名称
-		Prop1            string  `json:"prop1,omitempty"`         // 采购明细自定义属性1
-		Prop2            string  `json:"prop2,omitempty"`         // 采购明细自定义属性2
-		Prop3            string  `json:"prop3,omitempty"`         // 采购明细自定义属性3
-		Prop4            string  `json:"prop4,omitempty"`         // 采购明细自定义属性4
-		BrandName        string  `json:"brand_name"`              // 品牌名称
-		UnitName         string  `json:"unit_name"`               // 基本单位
-		BatchNo          string  `json:"batch_no"`                // 批次，若无批次则返回空字符串
-		ExpireDate       string  `json:"expire_data,omitempty"`   // 有效期，若无有效期则返回空字符串
-		ProductionDate   string  `json:"production_date"`         // 生产日期，若无生产日期则返回空字符串
-		Defect           bool    `json:"defect,omitempty"`        // 是否残品
-		UnitRatio        float64 `json:"unit_ratio"`              // 换算系数
-		PurchaseUnitName string  `json:"purchase_unit_name"`      // 辅助单位
-		StockinPrice     float64 `json:"stockin_price,omitempty"` // 入库价
+		RecId            int64   `json:"rec_id"`                    // 入库单明细id
+		Num              float64 `json:"num"`                       // 数量
+		Discount         float64 `json:"discount"`                  // 折扣
+		CostPrice        float64 `json:"cost_price,omitempty"`      // 税前单价
+		SrcPrice         float64 `json:"src_price,omitempty"`       // 税前折后单价
+		TaxPrice         float64 `json:"tax_price,omitempty"`       // 税后单价（折后）
+		TaxAmount        float64 `json:"tax_amount,omitempty"`      // 税后金额（税后总价）
+		Tax              float64 `json:"tax,omitempty"`             // 税率
+		TotalCost        float64 `json:"total_cost,omitempty"`      // 税前金额（税前总价）
+		Remark           string  `json:"remark,omitempty"`          // 入库单明细备注
+		GoodsName        string  `json:"goods_name"`                // 货品名称
+		GoodsNo          string  `json:"goods_no"`                  // 货品编号
+		SpecNo           string  `json:"spec_no,omitempty"`         // 商家编码
+		SpecCode         string  `json:"spec_code,omitempty"`       // 规格码
+		SpecName         string  `json:"spec_name,omitempty"`       // 规格名称
+		Prop1            string  `json:"prop1,omitempty"`           // 采购明细自定义属性1
+		Prop2            string  `json:"prop2,omitempty"`           // 采购明细自定义属性2
+		Prop3            string  `json:"prop3,omitempty"`           // 采购明细自定义属性3
+		Prop4            string  `json:"prop4,omitempty"`           // 采购明细自定义属性4
+		BrandName        string  `json:"brand_name"`                // 品牌名称
+		UnitName         string  `json:"unit_name"`                 // 基本单位
+		BatchNo          string  `json:"batch_no,omitempty"`        // 批次，若无批次则返回空字符串
+		ExpireDate       string  `json:"expire_data,omitempty"`     // 有效期，若无有效期则返回空字符串
+		ProductionDate   string  `json:"production_date,omitempty"` // 生产日期，若无生产日期则返回空字符串
+		Defect           bool    `json:"defect,omitempty"`          // 是否残品
+		UnitRatio        float64 `json:"unit_ratio"`                // 换算系数
+		PurchaseUnitName string  `json:"purchase_unit_name"`        // 辅助单位
+		StockinPrice     float64 `json:"stockin_price,omitempty"`   // 入库价
 	} `json:"details_list" gorm:"serializer:json"` //入库单明细
 }
 

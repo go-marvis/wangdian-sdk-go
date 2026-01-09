@@ -24,7 +24,7 @@ type RefundQueryReq struct {
 	IsSlave            bool   `json:"is_slave,omitempty"`              // 是否使用从库查询
 	NeedSn             bool   `json:"need_sn,omitempty"`               // 是否返回sn信息
 	NeedSummary        bool   `json:"need_summary,omitempty"`          // 是否需要汇总数据
-	NeedGovSubsidyInfo int    `json:"need_gov_subsidy_info,omitempty"` //是否需要国补信息
+	NeedGovSubsidyInfo int    `json:"need_gov_subsidy_info,omitempty"` // 是否需要国补信息
 }
 
 type RefundQueryResp struct {
@@ -123,17 +123,17 @@ type RefundOrderDetail struct {
 	GoodsName             string  `json:"goods_name"`                   // 货品名称
 	GoodsNo               string  `json:"goods_no"`                     // 货品编码
 	GoodsId               int     `json:"goods_id"`                     // 货品id
-	SpecId                int     `json:"spec_id"`                      // 商品id
+	SpecId                int     `json:"spec_id,omitempty"`            // 商品id
 	SpecNo                string  `json:"spec_no"`                      // 商家编码
 	Defect                bool    `json:"defect,omitempty"`             // 是否残次品
-	Prop1                 string  `json:"prop1"`                        // 单品自定义属性1
-	Prop2                 string  `json:"prop2"`                        // 单品自定义属性2
-	Prop3                 string  `json:"prop3"`                        // 单品自定义属性3
-	Prop4                 string  `json:"prop4"`                        // 单品自定义属性4
-	Prop5                 string  `json:"prop5"`                        // 单品自定义属性5
-	Prop6                 string  `json:"prop6"`                        // 单品自定义属性6
-	SpecName              string  `json:"spec_name"`                    // 规格名称
-	SpecCode              string  `json:"spec_code"`                    // 规格码
+	Prop1                 string  `json:"prop1,omitempty"`              // 单品自定义属性1
+	Prop2                 string  `json:"prop2,omitempty"`              // 单品自定义属性2
+	Prop3                 string  `json:"prop3,omitempty"`              // 单品自定义属性3
+	Prop4                 string  `json:"prop4,omitempty"`              // 单品自定义属性4
+	Prop5                 string  `json:"prop5,omitempty"`              // 单品自定义属性5
+	Prop6                 string  `json:"prop6,omitempty"`              // 单品自定义属性6
+	SpecName              string  `json:"spec_name,omitempty"`          // 规格名称
+	SpecCode              string  `json:"spec_code,omitempty"`          // 规格码
 	BrandNo               string  `json:"brand_no"`                     // 品牌编号
 	BrandName             string  `json:"brand_name"`                   // 品牌名称
 	GoodsUnit             string  `json:"goods_unit"`                   // 辅助单位
@@ -151,7 +151,7 @@ type RefundOrderDetail struct {
 	StockinNum            string  `json:"stockin_num"`                  // 入库数量
 	CheckedCostPrice      float64 `json:"checked_cost_price,omitempty"` // 入库单明细成本价
 	RefundAmount          float64 `json:"refund_amount"`                // 退款总额
-	SnList                string  `json:"sn_list"`                      // sn序列号信息
+	SnList                string  `json:"sn_list,omitempty"`            // sn序列号信息
 	UnitId                int     `json:"unit_id"`                      // 入库单位id
 	BaseUnitId            int     `json:"base_unit_id"`                 // 基本单位id
 	OrgStockinDetailId    int     `json:"org_stockin_detail_id"`        // 库存明细id
