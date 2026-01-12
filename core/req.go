@@ -9,18 +9,25 @@ type ApiReq struct {
 	HttpMethod  string
 	Method      string
 	Body        any
-	QueryParams url.Values
+	QueryParams QueryParams
 }
 
-type Pager struct {
-	PageNo   int
-	PageSize int
+type QueryParams url.Values
+
+func (u QueryParams) Set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u QueryParams) Get(key string) string {
+	vs := u[key]
+	if len(vs) == 0 {
+		return ""
+	}
+	return vs[0]
 }
 
 type ReqOption struct {
-	Header    http.Header
-	Pager     *Pager
-	CalcTotal bool
+	Header http.Header
 }
 
 type ReqOptionFunc func(option *ReqOption)
@@ -28,20 +35,5 @@ type ReqOptionFunc func(option *ReqOption)
 func WithHeader(header http.Header) ReqOptionFunc {
 	return func(option *ReqOption) {
 		option.Header = header
-	}
-}
-
-func WithPager(pageNo, pageSize int) ReqOptionFunc {
-	return func(option *ReqOption) {
-		option.Pager = &Pager{
-			PageNo:   pageNo,
-			PageSize: pageSize,
-		}
-	}
-}
-
-func WithCalcTotal(calcTotal bool) ReqOptionFunc {
-	return func(option *ReqOption) {
-		option.CalcTotal = calcTotal
 	}
 }

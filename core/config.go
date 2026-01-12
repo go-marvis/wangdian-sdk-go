@@ -21,7 +21,6 @@ type Config struct {
 	HttpClient HttpClient
 	ReqTimeout time.Duration
 
-	Header     http.Header
 	Serializer Serializer
 }
 

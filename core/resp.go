@@ -1,15 +1,20 @@
 package core
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type ApiResp struct {
-	StatusCode int
-	Header     http.Header
-	RawBody    []byte
+	StatusCode int         `json:"-"`
+	Header     http.Header `json:"-"`
+	RawBody    []byte      `json:"-"`
 }
 
-type Response[T any] struct {
+func (resp ApiResp) UnmarshalBody(val any, config *Config) error {
+	return config.Serializer.Unmarshal(resp.RawBody, val)
+}
+
+type CodeError struct {
 	Status  int    `json:"status"`
 	Message string `json:"message"`
-	Data    T      `json:"data"`
 }

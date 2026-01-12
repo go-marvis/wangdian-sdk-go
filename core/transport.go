@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"net/url"
 	"slices"
-	"strconv"
 	"time"
 )
 
@@ -51,7 +50,7 @@ func Request(ctx context.Context, apiReq *ApiReq, config *Config, options ...Req
 		optf(option)
 	}
 
-	body, err := config.Serializer.Marshal(apiReq.Body)
+	body, err := config.Serializer.Marshal([]any{apiReq.Body})
 	if err != nil {
 		return nil, err
 	}
@@ -59,16 +58,6 @@ func Request(ctx context.Context, apiReq *ApiReq, config *Config, options ...Req
 	var values = make(url.Values, 0)
 	for key := range apiReq.QueryParams {
 		values.Set(key, apiReq.QueryParams.Get(key))
-	}
-
-	if option.Pager != nil {
-		values.Set("page_size", strconv.Itoa(option.Pager.PageSize))
-		values.Set("page_no", strconv.Itoa(option.Pager.PageNo))
-	}
-	if option.CalcTotal {
-		values.Set("calc_total", "1")
-	} else {
-		values.Set("calc_total", "0")
 	}
 
 	values.Set("method", apiReq.Method)
@@ -89,19 +78,43 @@ func Request(ctx context.Context, apiReq *ApiReq, config *Config, options ...Req
 	}
 	req.Header.Set("Content-Type", defaultContentType)
 
-	for k, vs := range option.Header {
-		for _, v := range vs {
-			req.Header.Add(k, v)
+	var apiResp *ApiResp
+	for range config.Retry {
+		if config.Limiter != nil {
+			if err = config.Limiter.Wait(ctx); err != nil {
+				return nil, err
+			}
 		}
-	}
 
-	for k, vs := range config.Header {
-		for _, v := range vs {
-			req.Header.Add(k, v)
+		apiResp, err = doSend(config.HttpClient, req)
+		if apiResp.StatusCode != http.StatusOK {
+			slog.Error("http error", "status", apiResp.StatusCode)
+			return apiResp, fmt.Errorf("http error, status=%d", apiResp.StatusCode)
 		}
-	}
 
-	return doSend(config.HttpClient, req)
+		codeError := &CodeError{}
+		if err = config.Serializer.Unmarshal(apiResp.RawBody, codeError); err != nil {
+			slog.Error("unmarshal error", "err", err)
+			return apiResp, err
+		}
+
+		if codeError.Status != 0 {
+			slog.Error("api error", "status", codeError.Status, "message", codeError.Message)
+			err = fmt.Errorf("api error, code=%v, err=%v", codeError.Status, codeError.Message)
+
+			// retry
+			if codeError.Status == 100 {
+				if codeError.Message == "超过每分钟最大调用频率限制，请稍后重试" {
+					time.Sleep(3 * time.Second)
+					continue
+				}
+			}
+		}
+
+		err = nil
+		break
+	}
+	return apiResp, nil
 }
 
 func sign(params url.Values, secret string) string {
