@@ -2,22 +2,17 @@ package stockin
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/go-marvis/wangdian-sdk-go/core"
+	"github.com/go-marvis/wangdian-sdk-go/service/model"
 )
 
 type QueryOtherReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryOtherBody
 }
 
 func NewQueryOtherReqBuilder() *QueryOtherReqBuilder {
-	return &QueryOtherReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryOtherReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryOtherReqBuilder) PageSize(pageSize int) *QueryOtherReqBuilder {
@@ -36,15 +31,12 @@ func (builder *QueryOtherReqBuilder) CalcTotal(calcTotal int) *QueryOtherReqBuil
 }
 
 func (builder *QueryOtherReqBuilder) Body(body *QueryOtherBody) *QueryOtherReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder QueryOtherReqBuilder) Build() *QueryOtherReq {
-	req := &QueryOtherReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryOtherReq{builder.apiReq}
 }
 
 type QueryOtherReq struct {
@@ -119,15 +111,10 @@ type OtherOrder struct {
 
 type PurchaseQueryReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *PurchaseQueryBody
 }
 
 func NewPurchaseQueryReqBuilder() *PurchaseQueryReqBuilder {
-	return &PurchaseQueryReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &PurchaseQueryReqBuilder{core.NewApiReq()}
 }
 
 func (builder *PurchaseQueryReqBuilder) PageSize(pageSize int) *PurchaseQueryReqBuilder {
@@ -146,15 +133,12 @@ func (builder *PurchaseQueryReqBuilder) CalcTotal(calcTotal int) *PurchaseQueryR
 }
 
 func (builder *PurchaseQueryReqBuilder) Body(body *PurchaseQueryBody) *PurchaseQueryReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder PurchaseQueryReqBuilder) Build() *PurchaseQueryReq {
-	req := &PurchaseQueryReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &PurchaseQueryReq{builder.apiReq}
 }
 
 type PurchaseQueryReq struct {
@@ -237,15 +221,10 @@ type PurchaseOrder struct {
 
 type RefundQueryReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *RefundQueryBody
 }
 
 func NewRefundQueryReqBuilder() *RefundQueryReqBuilder {
-	return &RefundQueryReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &RefundQueryReqBuilder{core.NewApiReq()}
 }
 
 func (builder *RefundQueryReqBuilder) PageSize(pageSize int) *RefundQueryReqBuilder {
@@ -264,15 +243,12 @@ func (builder *RefundQueryReqBuilder) CalcTotal(calcTotal int) *RefundQueryReqBu
 }
 
 func (builder *RefundQueryReqBuilder) Body(body *RefundQueryBody) *RefundQueryReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *RefundQueryReqBuilder) Build() *RefundQueryReq {
-	req := &RefundQueryReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &RefundQueryReq{builder.apiReq}
 }
 
 type RefundQueryReq struct {
@@ -318,70 +294,66 @@ type RefundSummary struct {
 }
 
 type RefundOrder struct {
-	OrderNo              string              `json:"order_no"`                            // 入库单号
-	Status               int                 `json:"status"`                              // 入库单状态
-	AttachType           int                 `json:"attach_type"`                         // 关联类型
-	WarehouseNo          string              `json:"warehouse_no"`                        // 仓库编号
-	WarehouseName        string              `json:"warehouse_name"`                      // 仓库名称
-	CreatedTime          int64               `json:"created_time"`                        // 制单时间
-	Remark               string              `json:"remark"`                              // 备注
-	FenxiaoNick          string              `json:"fenxiao_nick"`                        // 分销商昵称
-	OperatorName         string              `json:"operator_name"`                       // 入库人
-	OperatorId           int                 `json:"operator_id"`                         // 入库人id
-	LogisticsType        int                 `json:"logistics_type"`                      // 物流方式
-	LogisticsName        string              `json:"logistics_name"`                      // 物流公司
-	LogisticsNo          string              `json:"logistics_no"`                        // 物流单号
-	LogisticsId          int                 `json:"logistics_id"`                        // 物流id
-	CheckTime            int64               `json:"check_time"`                          // 审核时间
-	RefundNo             string              `json:"refund_no"`                           // 退换单号
-	GoodsCount           float64             `json:"goods_count"`                         // 货品数量
-	ActualRefundAmount   float64             `json:"actual_refund_amount"`                // 退换单实际退款金额
-	CustomerNo           string              `json:"customer_no"`                         // 客户编码
-	CustomerName         string              `json:"customer_name"`                       // 退货人姓名
-	NickName             string              `json:"nick_name"`                           // 客户网名
-	ShopName             string              `json:"shop_name"`                           // 店铺名称
-	ShopNo               string              `json:"shop_no"`                             // 店铺编号
-	ShopRemark           string              `json:"shop_remark"`                         // 店铺备注
-	FlagName             string              `json:"flag_name"`                           // 标记名称
-	TradeNoList          string              `json:"trade_no_list"`                       // 系统订单编号
-	TidList              string              `json:"tid_list"`                            // 原始订单
-	SrcOrderId           int                 `json:"src_order_id"`                        // 退换单id
-	StockinId            int                 `json:"stockin_id"`                          // 入库单id
-	ShopPlatformId       int                 `json:"shop_platform_id"`                    // 店铺平台id
-	SubPlatformId        int                 `json:"sub_platform_id"`                     // 子平台id
-	ShopId               string              `json:"shop_id"`                             // 店铺id
-	WarehouseId          int                 `json:"warehouse_id"`                        // 仓库id
-	TotalPrice           float64             `json:"total_price"`                         // 入库单总成本
-	TotalGoodsStockinNum string              `json:"total_goods_stockin_num"`             // 货品入库总数量
-	ProcessStatus        int                 `json:"process_status"`                      // 退换单状态
-	Modified             string              `json:"modified"`                            // 修改时间
-	CheckOperatorName    string              `json:"check_operator_name"`                 // 审核人
-	CheckOperatorId      int                 `json:"check_operator_id"`                   // 审核人id
-	Reason               string              `json:"reason"`                              // 退换说明
-	ReasonId             int                 `json:"reason_id"`                           // 退换说明id
-	RefundAmount         float64             `json:"refund_amount"`                       // 入库总金额
-	AdjustNum            float64             `json:"adjust_num"`                          // 调整数量
-	WmsCode              string              `json:"wms_code"`                            // wms业务单号
-	Created              string              `json:"created"`                             // 创建时间
-	FlagId               int                 `json:"flag_id"`                             // 标记id
-	GoodsTypeCount       int                 `json:"goods_type_count"`                    // 货品类型数量
-	SrcOrderNo           string              `json:"src_order_no"`                        // 退换单编号
-	NoteCount            int                 `json:"note_count"`                          // 便签条数
-	Prop3                string              `json:"prop3"`                               // 源预入库单号
-	SrcOrderType         int                 `json:"src_order_type"`                      // 业务单类型
-	Type                 int                 `json:"type"`                                // 类型
-	SumRefundAmount      float64             `json:"sum_refund_amount"`                   // 货品退款金额
-	ContactTime          time.Time           `json:"contact_time"`                        // 关联时间
-	FenxiaoNickNo        string              `json:"fenxiao_nick_no"`                     // 分销商编码
-	TotalAmount          float64             `json:"total_amount"`                        // 退货货品金额
-	VirWarehouseNo       string              `json:"vir_warehouse_no"`                    // 虚拟仓编码
-	VirWarehouseName     string              `json:"vir_warehouse_name"`                  // 虚拟仓名称
-	DetailsList          []RefundOrderDetail `json:"details_list" gorm:"serializer:json"` // 入库单明细
-	GovSubsidyInfo       []struct {
-		Tid            string `json:"tid"`              // 原始单号
-		Oid            string `json:"oid"`              // 原始子单号
-		CorpEntityName string `json:"corp_entity_name"` // 公司主体名称
-	} `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
+	OrderNo              string                  `json:"order_no"`                                // 入库单号
+	Status               int                     `json:"status"`                                  // 入库单状态
+	AttachType           int                     `json:"attach_type"`                             // 关联类型
+	WarehouseNo          string                  `json:"warehouse_no"`                            // 仓库编号
+	WarehouseName        string                  `json:"warehouse_name"`                          // 仓库名称
+	CreatedTime          int64                   `json:"created_time"`                            // 制单时间
+	Remark               string                  `json:"remark"`                                  // 备注
+	FenxiaoNick          string                  `json:"fenxiao_nick"`                            // 分销商昵称
+	OperatorName         string                  `json:"operator_name"`                           // 入库人
+	OperatorId           int                     `json:"operator_id"`                             // 入库人id
+	LogisticsType        int                     `json:"logistics_type"`                          // 物流方式
+	LogisticsName        string                  `json:"logistics_name"`                          // 物流公司
+	LogisticsNo          string                  `json:"logistics_no"`                            // 物流单号
+	LogisticsId          int                     `json:"logistics_id"`                            // 物流id
+	CheckTime            int64                   `json:"check_time"`                              // 审核时间
+	RefundNo             string                  `json:"refund_no"`                               // 退换单号
+	GoodsCount           float64                 `json:"goods_count"`                             // 货品数量
+	ActualRefundAmount   float64                 `json:"actual_refund_amount"`                    // 退换单实际退款金额
+	CustomerNo           string                  `json:"customer_no"`                             // 客户编码
+	CustomerName         string                  `json:"customer_name"`                           // 退货人姓名
+	NickName             string                  `json:"nick_name"`                               // 客户网名
+	ShopName             string                  `json:"shop_name"`                               // 店铺名称
+	ShopNo               string                  `json:"shop_no"`                                 // 店铺编号
+	ShopRemark           string                  `json:"shop_remark"`                             // 店铺备注
+	FlagName             string                  `json:"flag_name"`                               // 标记名称
+	TradeNoList          string                  `json:"trade_no_list"`                           // 系统订单编号
+	TidList              string                  `json:"tid_list"`                                // 原始订单
+	SrcOrderId           int                     `json:"src_order_id"`                            // 退换单id
+	StockinId            int                     `json:"stockin_id"`                              // 入库单id
+	ShopPlatformId       int                     `json:"shop_platform_id"`                        // 店铺平台id
+	SubPlatformId        int                     `json:"sub_platform_id"`                         // 子平台id
+	ShopId               string                  `json:"shop_id"`                                 // 店铺id
+	WarehouseId          int                     `json:"warehouse_id"`                            // 仓库id
+	TotalPrice           float64                 `json:"total_price"`                             // 入库单总成本
+	TotalGoodsStockinNum string                  `json:"total_goods_stockin_num"`                 // 货品入库总数量
+	ProcessStatus        int                     `json:"process_status"`                          // 退换单状态
+	Modified             string                  `json:"modified"`                                // 修改时间
+	CheckOperatorName    string                  `json:"check_operator_name"`                     // 审核人
+	CheckOperatorId      int                     `json:"check_operator_id"`                       // 审核人id
+	Reason               string                  `json:"reason"`                                  // 退换说明
+	ReasonId             int                     `json:"reason_id"`                               // 退换说明id
+	RefundAmount         float64                 `json:"refund_amount"`                           // 入库总金额
+	AdjustNum            float64                 `json:"adjust_num"`                              // 调整数量
+	WmsCode              string                  `json:"wms_code"`                                // wms业务单号
+	Created              string                  `json:"created"`                                 // 创建时间
+	FlagId               int                     `json:"flag_id"`                                 // 标记id
+	GoodsTypeCount       int                     `json:"goods_type_count"`                        // 货品类型数量
+	SrcOrderNo           string                  `json:"src_order_no"`                            // 退换单编号
+	NoteCount            int                     `json:"note_count"`                              // 便签条数
+	Prop3                string                  `json:"prop3"`                                   // 源预入库单号
+	SrcOrderType         int                     `json:"src_order_type"`                          // 业务单类型
+	Type                 int                     `json:"type"`                                    // 类型
+	SumRefundAmount      float64                 `json:"sum_refund_amount"`                       // 货品退款金额
+	ContactTime          string                  `json:"contact_time"`                            // 关联时间
+	FenxiaoNickNo        string                  `json:"fenxiao_nick_no"`                         // 分销商编码
+	TotalAmount          float64                 `json:"total_amount"`                            // 退货货品金额
+	VirWarehouseNo       string                  `json:"vir_warehouse_no"`                        // 虚拟仓编码
+	VirWarehouseName     string                  `json:"vir_warehouse_name"`                      // 虚拟仓名称
+	DetailsList          []RefundOrderDetail     `json:"details_list" gorm:"serializer:json"`     // 入库单明细
+	GovSubsidyInfo       []*model.GovSubsidyInfo `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
 }
 
 // RefundOrderDetail 入库单明细

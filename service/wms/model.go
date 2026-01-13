@@ -8,15 +8,10 @@ import (
 
 type QueryStockPdInDetailReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryStockPdInDetailBody
 }
 
 func NewQueryStockPdInDetailReqBuilder() *QueryStockPdInDetailReqBuilder {
-	return &QueryStockPdInDetailReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryStockPdInDetailReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryStockPdInDetailReqBuilder) PageSize(pageSize int) *QueryStockPdInDetailReqBuilder {
@@ -35,15 +30,12 @@ func (builder *QueryStockPdInDetailReqBuilder) CalcTotal(calcTotal int) *QuerySt
 }
 
 func (builder *QueryStockPdInDetailReqBuilder) Body(body *QueryStockPdInDetailBody) *QueryStockPdInDetailReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *QueryStockPdInDetailReqBuilder) Build() *QueryStockPdInDetailReq {
-	req := &QueryStockPdInDetailReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryStockPdInDetailReq{builder.apiReq}
 }
 
 type QueryStockPdInDetailReq struct {
@@ -116,15 +108,10 @@ type StockPdInOrder struct {
 
 type QueryStockPdOutDetailReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryStockPdOutDetailBody
 }
 
 func NewQueryStockPdOutDetailReqBuilder() *QueryStockPdOutDetailReqBuilder {
-	return &QueryStockPdOutDetailReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryStockPdOutDetailReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryStockPdOutDetailReqBuilder) PageSize(pageSize int) *QueryStockPdOutDetailReqBuilder {
@@ -143,15 +130,12 @@ func (builder *QueryStockPdOutDetailReqBuilder) CalcTotal(calcTotal int) *QueryS
 }
 
 func (builder *QueryStockPdOutDetailReqBuilder) Body(body *QueryStockPdOutDetailBody) *QueryStockPdOutDetailReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder QueryStockPdOutDetailReqBuilder) Build() *QueryStockPdOutDetailReq {
-	req := &QueryStockPdOutDetailReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryStockPdOutDetailReq{builder.apiReq}
 }
 
 type QueryStockPdOutDetailReq struct {

@@ -4,19 +4,15 @@ import (
 	"fmt"
 
 	"github.com/go-marvis/wangdian-sdk-go/core"
+	"github.com/go-marvis/wangdian-sdk-go/service/model"
 )
 
 type RefundSearchReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *RefundSearchReqBody
 }
 
 func NewRefundSearchReqBuilder() *RefundSearchReqBuilder {
-	builder := &RefundSearchReqBuilder{}
-	builder.apiReq = &core.ApiReq{
-		QueryParams: core.QueryParams{},
-	}
-	return builder
+	return &RefundSearchReqBuilder{core.NewApiReq()}
 }
 
 func (builder *RefundSearchReqBuilder) PageSize(pageSize int) *RefundSearchReqBuilder {
@@ -35,16 +31,12 @@ func (builder *RefundSearchReqBuilder) CalcTotal(calcTotal int) *RefundSearchReq
 }
 
 func (builder *RefundSearchReqBuilder) Body(body *RefundSearchReqBody) *RefundSearchReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *RefundSearchReqBuilder) Build() *RefundSearchReq {
-	req := &RefundSearchReq{}
-	req.apiReq = &core.ApiReq{}
-	req.apiReq.QueryParams = builder.apiReq.QueryParams
-	req.apiReq.Body = builder.body
-	return req
+	return &RefundSearchReq{builder.apiReq}
 }
 
 type RefundSearchReq struct {
@@ -239,9 +231,5 @@ type RefundSearchOrder struct {
 			Remark      string  `json:"remark"`       // 备注
 		} `json:"swap_order_detail_list,omitempty"` // 换出订单明细
 	} `json:"swap_order" gorm:"serializer:json"` // 换出订单
-	GovSubsidyInfo []struct {
-		Tid            string `json:"tid"`              // 原始单号
-		Oid            string `json:"oid"`              // 原始子单号
-		CorpEntityName string `json:"corp_entity_name"` // 公司主体名称
-	} `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
+	GovSubsidyInfo []*model.GovSubsidyInfo `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
 }

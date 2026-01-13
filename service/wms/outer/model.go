@@ -8,15 +8,10 @@ import (
 
 type QueryOuterInReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryOuterInBody
 }
 
 func NewQueryOuterInReqBuilder() *QueryOuterInReqBuilder {
-	return &QueryOuterInReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryOuterInReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryOuterInReqBuilder) PageSize(pageSize int) *QueryOuterInReqBuilder {
@@ -35,15 +30,12 @@ func (builder *QueryOuterInReqBuilder) CalcTotal(calcTotal int) *QueryOuterInReq
 }
 
 func (builder *QueryOuterInReqBuilder) Body(body *QueryOuterInBody) *QueryOuterInReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder QueryOuterInReqBuilder) Build() *QueryOuterInReq {
-	req := &QueryOuterInReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryOuterInReq{builder.apiReq}
 }
 
 type QueryOuterInReq struct {
@@ -113,15 +105,10 @@ type OuterInOrder struct {
 
 type QueryOuterOutReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryOuterOutBody
 }
 
 func NewQueryOuterOutReqBuilder() *QueryOuterOutReqBuilder {
-	return &QueryOuterOutReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryOuterOutReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryOuterOutReqBuilder) PageSize(pageSize int) *QueryOuterOutReqBuilder {
@@ -140,15 +127,12 @@ func (builder *QueryOuterOutReqBuilder) CalcTotal(calcTotal int) *QueryOuterOutR
 }
 
 func (builder *QueryOuterOutReqBuilder) Body(body *QueryOuterOutBody) *QueryOuterOutReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *QueryOuterOutReqBuilder) Build() *QueryOuterOutReq {
-	req := &QueryOuterOutReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryOuterOutReq{builder.apiReq}
 }
 
 type QueryOuterOutReq struct {

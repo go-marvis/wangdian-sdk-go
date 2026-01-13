@@ -8,15 +8,10 @@ import (
 
 type QueryShopReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryShopBody
 }
 
 func NewQueryShopReqBuilder() *QueryShopReqBuilder {
-	return &QueryShopReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryShopReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryShopReqBuilder) PageSize(pageSize int) *QueryShopReqBuilder {
@@ -35,15 +30,12 @@ func (builder *QueryShopReqBuilder) CalcTotal(calcTotal int) *QueryShopReqBuilde
 }
 
 func (builder *QueryShopReqBuilder) Body(body *QueryShopBody) *QueryShopReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *QueryShopReqBuilder) Build() *QueryShopReq {
-	req := &QueryShopReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryShopReq{builder.apiReq}
 }
 
 type QueryShopReq struct {
@@ -96,15 +88,10 @@ type ShopDetail struct {
 
 type QueryWarehouseReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *QueryWarehouseBody
 }
 
 func NewQueryWarehouseReqBuilder() *QueryWarehouseReqBuilder {
-	return &QueryWarehouseReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &QueryWarehouseReqBuilder{core.NewApiReq()}
 }
 
 func (builder *QueryWarehouseReqBuilder) PageSize(pageSize int) *QueryWarehouseReqBuilder {
@@ -123,19 +110,12 @@ func (builder *QueryWarehouseReqBuilder) CalcTotal(calcTotal int) *QueryWarehous
 }
 
 func (builder *QueryWarehouseReqBuilder) Body(body *QueryWarehouseBody) *QueryWarehouseReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *QueryWarehouseReqBuilder) Build() *QueryWarehouseReq {
-	req := &QueryWarehouseReq{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &QueryWarehouseReq{builder.apiReq}
 }
 
 type QueryWarehouseReq struct {

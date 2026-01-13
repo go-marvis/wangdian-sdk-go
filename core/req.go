@@ -9,21 +9,13 @@ type ApiReq struct {
 	HttpMethod  string
 	Method      string
 	Body        any
-	QueryParams QueryParams
+	QueryParams url.Values
 }
 
-type QueryParams url.Values
-
-func (u QueryParams) Set(key, value string) {
-	u[key] = []string{value}
-}
-
-func (u QueryParams) Get(key string) string {
-	vs := u[key]
-	if len(vs) == 0 {
-		return ""
+func NewApiReq() *ApiReq {
+	return &ApiReq{
+		QueryParams: url.Values{},
 	}
-	return vs[0]
 }
 
 type ReqOption struct {

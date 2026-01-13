@@ -17,7 +17,6 @@ type sales struct {
 //
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=wms.stockout.Sales.queryWithDetail
 func (s *sales) QueryWithDetail(ctx context.Context, req *SalesQueryReq, options ...core.ReqOptionFunc) (*SalesQueryResp, error) {
-
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "wms.stockout.Sales.queryWithDetail"

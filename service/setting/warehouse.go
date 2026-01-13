@@ -11,6 +11,8 @@ type warehouse struct {
 	config *core.Config
 }
 
+// 获取ERP的仓库档案资料
+// https://open.wangdian.cn/qjb/open/apidoc/doc?path=setting.Warehouse.queryWarehouse
 func (w warehouse) QueryWarehouse(ctx context.Context, req *QueryWarehouseReq, options ...core.ReqOptionFunc) (*QueryWarehouseResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost

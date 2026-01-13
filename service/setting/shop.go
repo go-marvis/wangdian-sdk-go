@@ -11,6 +11,8 @@ type shop struct {
 	config *core.Config
 }
 
+// QueryShop 获取ERP的店铺档案资料
+// https://open.wangdian.cn/qjb/open/apidoc/doc?path=setting.Shop.queryShop
 func (s *shop) QueryShop(ctx context.Context, req *QueryShopReq, options ...core.ReqOptionFunc) (*QueryShopResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost

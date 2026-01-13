@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"context"
 	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"log/slog"
 	"maps"
 	"net/http"
@@ -71,7 +73,15 @@ func Request(ctx context.Context, apiReq *ApiReq, config *Config, options ...Req
 	values.Del("body")
 
 	url := config.BaseUrl + "?" + values.Encode()
-	slog.Debug(apiReq.HttpMethod, "url", url, "body", string(body))
+	if config.Debug {
+		payload := body
+		buf := bytes.NewBuffer(make([]byte, 0, len(body)+1024))
+		if err := json.Indent(buf, body, "", "  "); err == nil {
+			payload = buf.Bytes()
+		}
+		log.Printf("[DEBUG] [API] %s %s payload:\n%s\n", apiReq.HttpMethod, url, payload)
+	}
+
 	req, err := http.NewRequestWithContext(ctx, apiReq.HttpMethod, url, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err

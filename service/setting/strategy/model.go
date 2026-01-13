@@ -8,15 +8,10 @@ import (
 
 type VirtualWarehouseQueryReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *VirtualWarehouseQueryBody
 }
 
 func NewVirtualWarehouseQueryReqBuilder() *VirtualWarehouseQueryReqBuilder {
-	builder := &VirtualWarehouseQueryReqBuilder{}
-	builder.apiReq = &core.ApiReq{
-		QueryParams: core.QueryParams{},
-	}
-	return builder
+	return &VirtualWarehouseQueryReqBuilder{core.NewApiReq()}
 }
 
 func (builder *VirtualWarehouseQueryReqBuilder) PageSize(pageSize int) *VirtualWarehouseQueryReqBuilder {
@@ -35,15 +30,12 @@ func (builder *VirtualWarehouseQueryReqBuilder) CalcTotal(calcTotal int) *Virtua
 }
 
 func (builder *VirtualWarehouseQueryReqBuilder) Body(body *VirtualWarehouseQueryBody) *VirtualWarehouseQueryReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *VirtualWarehouseQueryReqBuilder) Build() *VirtualWarehouseQueryReq {
-	req := &VirtualWarehouseQueryReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &VirtualWarehouseQueryReq{builder.apiReq}
 }
 
 type VirtualWarehouseQueryReq struct {
@@ -84,15 +76,10 @@ type VirtualWarehouseQueryDetail struct {
 
 type VirtualWarehouseOrderSearchReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *VirtualWarehouseOrderSearchBody
 }
 
 func NewVirtualWarehouseOrderSearchReqBuilder() *VirtualWarehouseOrderSearchReqBuilder {
-	return &VirtualWarehouseOrderSearchReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &VirtualWarehouseOrderSearchReqBuilder{core.NewApiReq()}
 }
 
 func (builder *VirtualWarehouseOrderSearchReqBuilder) PageSize(pageSize int) *VirtualWarehouseOrderSearchReqBuilder {
@@ -111,15 +98,12 @@ func (builder *VirtualWarehouseOrderSearchReqBuilder) CalcTotal(calcTotal int) *
 }
 
 func (builder *VirtualWarehouseOrderSearchReqBuilder) Body(body *VirtualWarehouseOrderSearchBody) *VirtualWarehouseOrderSearchReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *VirtualWarehouseOrderSearchReqBuilder) Build() *VirtualWarehouseOrderSearchReq {
-	req := &VirtualWarehouseOrderSearchReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &VirtualWarehouseOrderSearchReq{builder.apiReq}
 }
 
 type VirtualWarehouseOrderSearchReq struct {

@@ -4,48 +4,15 @@ import (
 	"fmt"
 
 	"github.com/go-marvis/wangdian-sdk-go/core"
+	"github.com/go-marvis/wangdian-sdk-go/service/model"
 )
-
-// PositionDetail 货位明细
-type PositionDetail struct {
-	RecId              int     `json:"rec_id"`                // 货位明细id
-	StockoutDetailId   int     `json:"stockout_detail_id"`    // 出库单明细id
-	PositionId         int     `json:"position_id,omitempty"` // 货位id
-	PositionNo         string  `json:"position_no,omitempty"` // 货位编号
-	ExpireDate         string  `json:"expire_date"`           // 有效期
-	BatchNo            string  `json:"batch_no"`              // 批次号
-	PositionGoodsCount float64 `json:"position_goods_count"`  // 当前货位出库总货品数量
-}
-
-// LogisticsDetail 物流单
-type LogisticsDetail struct {
-	RecId         int     `json:"rec_id"`           // 物流单id
-	StockoutId    int     `json:"stockout_id"`      // 出库单id
-	LogisticsNo   string  `json:"logistics_no"`     // 物流单号
-	CalcWeight    float64 `json:"calc_weight"`      // 估算重量
-	Weight        float64 `json:"weight"`           // 称重重量
-	PackageName   string  `json:"package_name"`     // 包装
-	LogisticsName string  `json:"logistics_name"`   // 物流名称
-	LogisticsId   int     `json:"logistics_id"`     // 物流ID
-	Postage       string  `json:"postage"`          // 估算邮资
-	Remark        string  `json:"remark,omitempty"` // 备注
-	Length        float64 `json:"length,omitempty"` // 长
-	Width         float64 `json:"width,omitempty"`  // 宽
-	Height        float64 `json:"height,omitempty"` // 高
-	Volume        string  `json:"volume,omitempty"` // 体积
-}
 
 type OtherQueryReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *OtherQueryBody
 }
 
 func NewOtherQueryReqBuilder() *OtherQueryReqBuilder {
-	return &OtherQueryReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &OtherQueryReqBuilder{core.NewApiReq()}
 }
 
 func (builder *OtherQueryReqBuilder) PageSize(pageSize int) *OtherQueryReqBuilder {
@@ -64,16 +31,13 @@ func (builder *OtherQueryReqBuilder) CalcTotal(calcTotal int) *OtherQueryReqBuil
 }
 
 func (builder *OtherQueryReqBuilder) Body(body *OtherQueryBody) *OtherQueryReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 
 }
 
 func (builder *OtherQueryReqBuilder) Build() *OtherQueryReq {
-	req := &OtherQueryReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &OtherQueryReq{builder.apiReq}
 }
 
 type OtherQueryReq struct {
@@ -130,43 +94,38 @@ type OtherOrder struct {
 	LogisticsCompanyNo    string  `json:"logistics_company_no"`     // 物流公司编号
 	WarehouseName         string  `json:"warehouse_name"`           // 仓库名称
 	DetailList            []struct {
-		RecId               int              `json:"rec_id"`                 // 出库单详情id
-		StockoutId          int              `json:"stockout_id"`            // 出库单id
-		GoodsCount          float64          `json:"goods_count"`            // 货品数量
-		TotalAmount         float64          `json:"total_amount,omitempty"` // 总成本
-		ExpireAate          string           `json:"expire_date"`            // 有效期
-		Remark              string           `json:"remark,omitempty"`       // 出库单详情备注
-		BrandNo             string           `json:"brand_no"`               // 品牌编号
-		BrandName           string           `json:"brand_name"`             // 品牌名称
-		GoodsName           string           `json:"goods_name"`             // 货品名称
-		GoodsNo             string           `json:"goods_no"`               // 货品编码
-		SpecNo              string           `json:"spec_no,omitempty"`      // 商家编码
-		SpecName            string           `json:"spec_name"`              // 规格名称
-		SpecCode            string           `json:"spec_code,omitempty"`    // 规格码
-		Defect              bool             `json:"defect,omitempty"`       // 是否残次品
-		CostPrice           float64          `json:"cost_price,omitempty"`   // 成本价
-		Weight              float64          `json:"weight,omitempty"`       // 总重量
-		GoodsType           int              `json:"goods_type"`             // 货品类型
-		UnitName            string           `json:"unit_name,omitempty"`    // 单位
-		BaseUnitId          int              `json:"base_unit_id"`           // 单位id
-		BatchNo             string           `json:"batch_no"`               // 批次号
-		PositionId          int              `json:"position_id,omitempty"`  // 货位id
-		PositionNo          string           `json:"position_no,omitempty"`  // 货位编号
-		PositionDetailsList []PositionDetail `json:"position_details_list"`  // 货位明细
+		RecId               int                    `json:"rec_id"`                 // 出库单详情id
+		StockoutId          int                    `json:"stockout_id"`            // 出库单id
+		GoodsCount          float64                `json:"goods_count"`            // 货品数量
+		TotalAmount         float64                `json:"total_amount,omitempty"` // 总成本
+		ExpireAate          string                 `json:"expire_date"`            // 有效期
+		Remark              string                 `json:"remark,omitempty"`       // 出库单详情备注
+		BrandNo             string                 `json:"brand_no"`               // 品牌编号
+		BrandName           string                 `json:"brand_name"`             // 品牌名称
+		GoodsName           string                 `json:"goods_name"`             // 货品名称
+		GoodsNo             string                 `json:"goods_no"`               // 货品编码
+		SpecNo              string                 `json:"spec_no,omitempty"`      // 商家编码
+		SpecName            string                 `json:"spec_name"`              // 规格名称
+		SpecCode            string                 `json:"spec_code,omitempty"`    // 规格码
+		Defect              bool                   `json:"defect,omitempty"`       // 是否残次品
+		CostPrice           float64                `json:"cost_price,omitempty"`   // 成本价
+		Weight              float64                `json:"weight,omitempty"`       // 总重量
+		GoodsType           int                    `json:"goods_type"`             // 货品类型
+		UnitName            string                 `json:"unit_name,omitempty"`    // 单位
+		BaseUnitId          int                    `json:"base_unit_id"`           // 单位id
+		BatchNo             string                 `json:"batch_no"`               // 批次号
+		PositionId          int                    `json:"position_id,omitempty"`  // 货位id
+		PositionNo          string                 `json:"position_no,omitempty"`  // 货位编号
+		PositionDetailsList []model.PositionDetail `json:"position_details_list"`  // 货位明细
 	} `json:"detail_list"  gorm:"serializer:json"` // 出库单明细
 }
 
 type SalesQueryReqBuilder struct {
 	apiReq *core.ApiReq
-	body   *SalesQueryBody
 }
 
 func NewSalesQueryReqBuilder() *SalesQueryReqBuilder {
-	return &SalesQueryReqBuilder{
-		apiReq: &core.ApiReq{
-			QueryParams: core.QueryParams{},
-		},
-	}
+	return &SalesQueryReqBuilder{core.NewApiReq()}
 }
 
 func (builder *SalesQueryReqBuilder) PageSize(pageSize int) *SalesQueryReqBuilder {
@@ -185,15 +144,12 @@ func (builder *SalesQueryReqBuilder) CalcTotal(calcTotal int) *SalesQueryReqBuil
 }
 
 func (builder *SalesQueryReqBuilder) Body(body *SalesQueryBody) *SalesQueryReqBuilder {
-	builder.body = body
+	builder.apiReq.Body = body
 	return builder
 }
 
 func (builder *SalesQueryReqBuilder) Build() *SalesQueryReq {
-	req := &SalesQueryReq{}
-	req.apiReq = builder.apiReq
-	req.apiReq.Body = builder.body
-	return req
+	return &SalesQueryReq{builder.apiReq}
 }
 
 type SalesQueryReq struct {
@@ -232,125 +188,121 @@ type SalesQueryData struct {
 }
 
 type SalesOrder struct {
-	StockoutId           int                `json:"stockout_id"`                           // 出库单ID
-	OrderNo              string             `json:"order_no"`                              // 出库单号
-	VirtualWarehouseNo   string             `json:"virtual_warehouse_no"`                  // 虚拟仓编号
-	VirtualWarehouseName string             `json:"virtual_warehouse_name"`                // 虚拟仓名称
-	SrcOrderNo           string             `json:"src_order_no"`                          // 系统订单编号
-	WarehouseNo          string             `json:"warehouse_no"`                          // 仓库编号
-	WarehouseName        string             `json:"warehouse_name"`                        // 仓库名称
-	ConsignTime          string             `json:"consign_time"`                          // 发货时间
-	OrderType            int                `json:"order_type"`                            // 源单据类别
-	GoodsCount           float64            `json:"goods_count"`                           // 货品数量
-	LogisticsNo          string             `json:"logistics_no"`                          // 物流单号
-	ReceiverName         string             `json:"receiver_name"`                         // 收件人姓名
-	ReceiverCountry      int                `json:"receiver_country"`                      // 国家
-	ReceiverProvince     int                `json:"receiver_province"`                     // 省份ID
-	ReceiverCity         int                `json:"receiver_city"`                         // 城市ID
-	ReceiverDistrict     int                `json:"receiver_district"`                     // 地区ID
-	ReceiverAddress      string             `json:"receiver_address"`                      // 地址
-	ReceiverMobile       string             `json:"receiver_mobile"`                       // 收件人手机
-	ReceiverTelno        string             `json:"receiver_telno"`                        // 收件人固话
-	ReceiverZip          string             `json:"receiver_zip"`                          // 收件人邮编
-	ReceiverArea         string             `json:"receiver_area"`                         // 省市区
-	Remark               string             `json:"remark"`                                // 出库单备注
-	Weight               float64            `json:"weight"`                                // 重量
-	BlockReason          int                `json:"block_reason"`                          // 截停原因
-	LogisticsType        int                `json:"logistics_type"`                        // 物流方式
-	LogisticsCode        string             `json:"logistics_code"`                        // 物流编号
-	LogisticsName        string             `json:"logistics_name"`                        // 物流公司名称
-	ShopId               int                `json:"shop_id"`                               // 店铺id
-	WarehouseId          int                `json:"warehouse_id"`                          // 仓库id
-	LogisticsId          int                `json:"logistics_id"`                          // 物流id
-	BadReason            int                `json:"bad_reason"`                            // 异常原因
-	ReceiverDtb          string             `json:"receiver_dtb"`                          // 大头笔
-	RefundStatus         int                `json:"refund_status"`                         // 退款状态
-	TradeType            int                `json:"trade_type"`                            // 销售类型
-	SalesmanNo           string             `json:"salesman_no"`                           // 业务员编号
-	Fullname             string             `json:"fullname"`                              // 业务员姓名
-	PickerName           string             `json:"picker_name"`                           // 拣货员
-	ExaminerName         string             `json:"examiner_name"`                         // 验货员
-	ConsignerName        string             `json:"consigner_name"`                        // 发货员
-	PrinterName          string             `json:"printer_name"`                          // 打单员
-	PackagerName         string             `json:"packager_name"`                         // 打包员
-	TradeStatus          int                `json:"trade_status"`                          // 订单状态
-	TradeNo              string             `json:"trade_no"`                              // 订单编号
-	SrcTradeNo           string             `json:"src_trade_no"`                          // 原始单号
-	NickName             string             `json:"nick_name"`                             // 客户网名
-	CustomerNo           string             `json:"customer_no"`                           // 客户编码
-	CustomerName         string             `json:"customer_name"`                         // 客户姓名
-	TradeTime            int64              `json:"trade_time"`                            // 下单时间
-	PayTime              int64              `json:"pay_time"`                              // 支付时间
-	FlagName             string             `json:"flag_name"`                             // 标记名称
-	PostAmount           string             `json:"post_amount"`                           // 邮费
-	IdCardType           int                `json:"id_card_type"`                          // 证件类别
-	IdCard               string             `json:"id_card"`                               // 证件号码
-	ShopName             string             `json:"shop_name"`                             // 店铺名称
-	ShopNo               string             `json:"shop_no"`                               // 店铺编号
-	ShopRemark           string             `json:"shop_remark"`                           // 店铺备注
-	Status               int                `json:"status"`                                // 出库单状态
-	InvoiceType          int                `json:"invoice_type"`                          // 发票类型
-	InvoiceId            int                `json:"invoice_id"`                            // 发票ID
-	CodAmount            string             `json:"cod_amount"`                            // 货到付款金额
-	DeliveryTerm         int                `json:"delivery_term"`                         // 发货条件
-	PlatformId           int                `json:"platform_id"`                           // 平台ID
-	TradeId              int                `json:"trade_id"`                              // 订单ID
-	EmployeeNo           string             `json:"employee_no"`                           // 审核员编号
-	Discount             string             `json:"discount"`                              // 优惠金额
-	Tax                  string             `json:"tax"`                                   // 税额
-	TaxRate              string             `json:"tax_rate"`                              // 税率
-	Currency             string             `json:"currency"`                              // 币种
-	Created              int64              `json:"created"`                               // 系统订单建单时间
-	StockCheckTime       int64              `json:"stock_check_time"`                      // 出库单建单时间
-	PrintRemark          string             `json:"print_remark"`                          // 打印备注
-	BuyerMessage         string             `json:"buyer_message"`                         // 买家留言
-	CsRemark             string             `json:"cs_remark"`                             // 客服备注
-	InvoiceTitle         string             `json:"invoice_title"`                         // 发票抬头
-	InvoiceContent       string             `json:"invoice_content"`                       // 发票内容
-	PostFee              string             `json:"post_fee"`                              // 称重预估邮资
-	PackageFee           string             `json:"package_fee"`                           // 包装成本
-	Receivable           float64            `json:"receivable"`                            // 已付金额
-	GoodsTotalCost       string             `json:"goods_total_cost"`                      // 总成本价
-	GoodsTotalAmount     string             `json:"goods_total_amount"`                    // 总货款
-	Modified             string             `json:"modified"`                              // 最后修改时间
-	FenxiaoNick          string             `json:"fenxiao_nick"`                          // 分销商昵称
-	TradeLabel           string             `json:"trade_label"`                           // 订单标签
-	TradeFrom            int                `json:"trade_from"`                            // 订单来源
-	PicklistNo           string             `json:"picklist_no"`                           // 分拣波次
-	PicklistSeq          int                `json:"picklist_seq"`                          // 分拣序号
-	LogisticsPrintStatus int                `json:"logistics_print_status"`                // 物流单打印状态
-	Paid                 string             `json:"paid"`                                  // 已付
-	ShopPlatformId       int                `json:"shop_platform_id"`                      // 店铺平台id
-	SubPlatformId        int                `json:"sub_platform_id"`                       // 子平台id
-	ErrorInfo            string             `json:"error_info"`                            // 接口处理错误信息
-	CustomType           int                `json:"custom_type"`                           // 其他出库自定义子类别
-	SendbillTemplateId   int                `json:"sendbill_template_id"`                  // 发货单模板id
-	CustomerId           int                `json:"customer_id"`                           // 客户id
-	WarehouseType        int                `json:"warehouse_type"`                        // 仓库类别
-	OperatorId           int                `json:"operator_id"`                           // 制单人id（操作员）
-	OuterNo              string             `json:"outer_no"`                              // 外部单号
-	ConsignStatus        int                `json:"consign_status"`                        // 出库状态
-	GoodsTypeCount       int                `json:"goods_type_count"`                      // 货品种类
-	CalcPostCost         string             `json:"calc_post_cost"`                        // 预估邮资成本
-	BatchNo              string             `json:"batch_no"`                              // 打印批次
-	CreatedDate          string             `json:"created_date"`                          // 销售出库单创建时间
-	FenxiaoTid           string             `json:"fenxiao_tid"`                           // 分销原始单号
-	FenxiaoNickNo        string             `json:"fenxiao_nick_no"`                       // 分销商编号
-	LogisticsList        []LogisticsDetail  `json:"logistics_list" gorm:"serializer:json"` // 物流单列表
-	DetailsList          []SalesOrderDetail `json:"details_list" gorm:"serializer:json"`   // 销售出库单详情
-	AnchorName           string             `json:"anchor_name"`                           // 主播
-	AssistAchorName      string             `json:"assist_achor_name"`                     // 助播
-	ControlAchorName     string             `json:"control_achor_name"`                    // 场控
-	OperationAnchorName  string             `json:"operation_anchor_name"`                 // 运营
-	PickGroupName        string             `json:"pick_group_name"`                       // 拣货分组名称
-	FenxiaoShopName      string             `json:"fenxiao_shop_name"`                     // 分销店铺名称
-	WmsCode              string             `json:"wms_code"`                              // wms业务单号
-	StockoutFlagName     string             `json:"stockout_flag_name"`                    // 销售出库单标记名称
-	GovSubsidyInfo       []struct {
-		Tid            string `json:"tid"`              // 原始单号
-		Oid            string `json:"oid"`              // 原始子单号
-		CorpEntityName string `json:"corp_entity_name"` // 公司主体名称
-	} `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
+	StockoutId           int                     `json:"stockout_id"`                             // 出库单ID
+	OrderNo              string                  `json:"order_no"`                                // 出库单号
+	VirtualWarehouseNo   string                  `json:"virtual_warehouse_no"`                    // 虚拟仓编号
+	VirtualWarehouseName string                  `json:"virtual_warehouse_name"`                  // 虚拟仓名称
+	SrcOrderNo           string                  `json:"src_order_no"`                            // 系统订单编号
+	WarehouseNo          string                  `json:"warehouse_no"`                            // 仓库编号
+	WarehouseName        string                  `json:"warehouse_name"`                          // 仓库名称
+	ConsignTime          string                  `json:"consign_time"`                            // 发货时间
+	OrderType            int                     `json:"order_type"`                              // 源单据类别
+	GoodsCount           float64                 `json:"goods_count"`                             // 货品数量
+	LogisticsNo          string                  `json:"logistics_no"`                            // 物流单号
+	ReceiverName         string                  `json:"receiver_name"`                           // 收件人姓名
+	ReceiverCountry      int                     `json:"receiver_country"`                        // 国家
+	ReceiverProvince     int                     `json:"receiver_province"`                       // 省份ID
+	ReceiverCity         int                     `json:"receiver_city"`                           // 城市ID
+	ReceiverDistrict     int                     `json:"receiver_district"`                       // 地区ID
+	ReceiverAddress      string                  `json:"receiver_address"`                        // 地址
+	ReceiverMobile       string                  `json:"receiver_mobile"`                         // 收件人手机
+	ReceiverTelno        string                  `json:"receiver_telno"`                          // 收件人固话
+	ReceiverZip          string                  `json:"receiver_zip"`                            // 收件人邮编
+	ReceiverArea         string                  `json:"receiver_area"`                           // 省市区
+	Remark               string                  `json:"remark"`                                  // 出库单备注
+	Weight               float64                 `json:"weight"`                                  // 重量
+	BlockReason          int                     `json:"block_reason"`                            // 截停原因
+	LogisticsType        int                     `json:"logistics_type"`                          // 物流方式
+	LogisticsCode        string                  `json:"logistics_code"`                          // 物流编号
+	LogisticsName        string                  `json:"logistics_name"`                          // 物流公司名称
+	ShopId               int                     `json:"shop_id"`                                 // 店铺id
+	WarehouseId          int                     `json:"warehouse_id"`                            // 仓库id
+	LogisticsId          int                     `json:"logistics_id"`                            // 物流id
+	BadReason            int                     `json:"bad_reason"`                              // 异常原因
+	ReceiverDtb          string                  `json:"receiver_dtb"`                            // 大头笔
+	RefundStatus         int                     `json:"refund_status"`                           // 退款状态
+	TradeType            int                     `json:"trade_type"`                              // 销售类型
+	SalesmanNo           string                  `json:"salesman_no"`                             // 业务员编号
+	Fullname             string                  `json:"fullname"`                                // 业务员姓名
+	PickerName           string                  `json:"picker_name"`                             // 拣货员
+	ExaminerName         string                  `json:"examiner_name"`                           // 验货员
+	ConsignerName        string                  `json:"consigner_name"`                          // 发货员
+	PrinterName          string                  `json:"printer_name"`                            // 打单员
+	PackagerName         string                  `json:"packager_name"`                           // 打包员
+	TradeStatus          int                     `json:"trade_status"`                            // 订单状态
+	TradeNo              string                  `json:"trade_no"`                                // 订单编号
+	SrcTradeNo           string                  `json:"src_trade_no"`                            // 原始单号
+	NickName             string                  `json:"nick_name"`                               // 客户网名
+	CustomerNo           string                  `json:"customer_no"`                             // 客户编码
+	CustomerName         string                  `json:"customer_name"`                           // 客户姓名
+	TradeTime            int64                   `json:"trade_time"`                              // 下单时间
+	PayTime              int64                   `json:"pay_time"`                                // 支付时间
+	FlagName             string                  `json:"flag_name"`                               // 标记名称
+	PostAmount           string                  `json:"post_amount"`                             // 邮费
+	IdCardType           int                     `json:"id_card_type"`                            // 证件类别
+	IdCard               string                  `json:"id_card"`                                 // 证件号码
+	ShopName             string                  `json:"shop_name"`                               // 店铺名称
+	ShopNo               string                  `json:"shop_no"`                                 // 店铺编号
+	ShopRemark           string                  `json:"shop_remark"`                             // 店铺备注
+	Status               int                     `json:"status"`                                  // 出库单状态
+	InvoiceType          int                     `json:"invoice_type"`                            // 发票类型
+	InvoiceId            int                     `json:"invoice_id"`                              // 发票ID
+	CodAmount            string                  `json:"cod_amount"`                              // 货到付款金额
+	DeliveryTerm         int                     `json:"delivery_term"`                           // 发货条件
+	PlatformId           int                     `json:"platform_id"`                             // 平台ID
+	TradeId              int                     `json:"trade_id"`                                // 订单ID
+	EmployeeNo           string                  `json:"employee_no"`                             // 审核员编号
+	Discount             string                  `json:"discount"`                                // 优惠金额
+	Tax                  string                  `json:"tax"`                                     // 税额
+	TaxRate              string                  `json:"tax_rate"`                                // 税率
+	Currency             string                  `json:"currency"`                                // 币种
+	Created              int64                   `json:"created"`                                 // 系统订单建单时间
+	StockCheckTime       int64                   `json:"stock_check_time"`                        // 出库单建单时间
+	PrintRemark          string                  `json:"print_remark"`                            // 打印备注
+	BuyerMessage         string                  `json:"buyer_message"`                           // 买家留言
+	CsRemark             string                  `json:"cs_remark"`                               // 客服备注
+	InvoiceTitle         string                  `json:"invoice_title"`                           // 发票抬头
+	InvoiceContent       string                  `json:"invoice_content"`                         // 发票内容
+	PostFee              string                  `json:"post_fee"`                                // 称重预估邮资
+	PackageFee           string                  `json:"package_fee"`                             // 包装成本
+	Receivable           float64                 `json:"receivable"`                              // 已付金额
+	GoodsTotalCost       string                  `json:"goods_total_cost"`                        // 总成本价
+	GoodsTotalAmount     string                  `json:"goods_total_amount"`                      // 总货款
+	Modified             string                  `json:"modified"`                                // 最后修改时间
+	FenxiaoNick          string                  `json:"fenxiao_nick"`                            // 分销商昵称
+	TradeLabel           string                  `json:"trade_label"`                             // 订单标签
+	TradeFrom            int                     `json:"trade_from"`                              // 订单来源
+	PicklistNo           string                  `json:"picklist_no"`                             // 分拣波次
+	PicklistSeq          int                     `json:"picklist_seq"`                            // 分拣序号
+	LogisticsPrintStatus int                     `json:"logistics_print_status"`                  // 物流单打印状态
+	Paid                 string                  `json:"paid"`                                    // 已付
+	ShopPlatformId       int                     `json:"shop_platform_id"`                        // 店铺平台id
+	SubPlatformId        int                     `json:"sub_platform_id"`                         // 子平台id
+	ErrorInfo            string                  `json:"error_info"`                              // 接口处理错误信息
+	CustomType           int                     `json:"custom_type"`                             // 其他出库自定义子类别
+	SendbillTemplateId   int                     `json:"sendbill_template_id"`                    // 发货单模板id
+	CustomerId           int                     `json:"customer_id"`                             // 客户id
+	WarehouseType        int                     `json:"warehouse_type"`                          // 仓库类别
+	OperatorId           int                     `json:"operator_id"`                             // 制单人id（操作员）
+	OuterNo              string                  `json:"outer_no"`                                // 外部单号
+	ConsignStatus        int                     `json:"consign_status"`                          // 出库状态
+	GoodsTypeCount       int                     `json:"goods_type_count"`                        // 货品种类
+	CalcPostCost         string                  `json:"calc_post_cost"`                          // 预估邮资成本
+	BatchNo              string                  `json:"batch_no"`                                // 打印批次
+	CreatedDate          string                  `json:"created_date"`                            // 销售出库单创建时间
+	FenxiaoTid           string                  `json:"fenxiao_tid"`                             // 分销原始单号
+	FenxiaoNickNo        string                  `json:"fenxiao_nick_no"`                         // 分销商编号
+	LogisticsList        []model.LogisticsDetail `json:"logistics_list" gorm:"serializer:json"`   // 物流单列表
+	DetailsList          []SalesOrderDetail      `json:"details_list" gorm:"serializer:json"`     // 销售出库单详情
+	AnchorName           string                  `json:"anchor_name"`                             // 主播
+	AssistAchorName      string                  `json:"assist_achor_name"`                       // 助播
+	ControlAchorName     string                  `json:"control_achor_name"`                      // 场控
+	OperationAnchorName  string                  `json:"operation_anchor_name"`                   // 运营
+	PickGroupName        string                  `json:"pick_group_name"`                         // 拣货分组名称
+	FenxiaoShopName      string                  `json:"fenxiao_shop_name"`                       // 分销店铺名称
+	WmsCode              string                  `json:"wms_code"`                                // wms业务单号
+	StockoutFlagName     string                  `json:"stockout_flag_name"`                      // 销售出库单标记名称
+	GovSubsidyInfo       []*model.GovSubsidyInfo `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
 }
 
 type SalesOrderDetail struct {
@@ -426,11 +378,11 @@ type SalesOrderDetail struct {
 	ScanScore           float64 `json:"scan_score,omitempty"`        // 验货积分
 	ApiBoodsName        string  `json:"api_goods_name"`              // 平台货品名称
 	PositionDetailsList []struct {
-		PositionDetail
+		model.PositionDetail
 		ProductionDate string `json:"production_date"` // 生产日期
 	} `json:"position_details_list,omitempty"` //出库货位明细
 	PickPositionDetailsList []struct {
-		PositionDetail
+		model.PositionDetail
 		ProductionDate string `json:"production_date"` // 生产日期
 		SpecNo         string `json:"spec_no"`         // 商家编码
 	} `json:"pick_position_details_list,omitempty"` // 	拣货位明细
