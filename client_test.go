@@ -2,6 +2,7 @@ package wangdian
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/go-marvis/wangdian-sdk-go/core"
@@ -19,10 +20,10 @@ import (
 var (
 	ctx = context.Background()
 	api = NewClient(&core.Config{
-		Sid:     "", // 卖家账号，旺店通分配
-		Key:     "", // 接口账号，旺店通分配
-		Secret:  "",
-		Salt:    "",
+		Sid:     os.Getenv("SID"), // 卖家账号，旺店通分配
+		Key:     os.Getenv("KEY"), // 接口账号，旺店通分配
+		Secret:  os.Getenv("SECRET"),
+		Salt:    os.Getenv("SALT"),
 		BaseUrl: "http://wdt.wangdian.cn/openapi", // 服务地址
 		Version: "1.0",
 		Retry:   5,

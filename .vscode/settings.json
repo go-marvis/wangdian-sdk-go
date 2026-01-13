@@ -3,5 +3,7 @@
         "-v",
         "-args",
         "-test.v",
-    ]
+    ],
+    "go.testTimeout": "300s",
+    "go.testEnvFile": "${workspaceFolder}/.env"
 }
