@@ -1,4 +1,4 @@
-package setting
+package shop
 
 import (
 	"context"
@@ -7,13 +7,17 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type shop struct {
+type Service struct {
 	config *core.Config
+}
+
+func NewService(config *core.Config) *Service {
+	return &Service{config}
 }
 
 // QueryShop 获取ERP的店铺档案资料
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=setting.Shop.queryShop
-func (s *shop) QueryShop(ctx context.Context, req *QueryShopReq, options ...core.ReqOptionFunc) (*QueryShopResp, error) {
+func (s *Service) QueryShop(ctx context.Context, req *QueryShopReq, options ...core.ReqOptionFunc) (*QueryShopResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "setting.Shop.queryShop"

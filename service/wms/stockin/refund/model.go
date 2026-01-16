@@ -1,4 +1,4 @@
-package stockin
+package refund
 
 import (
 	"fmt"
@@ -7,255 +7,43 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/service/model"
 )
 
-type QueryOtherReqBuilder struct {
+type QueryReqBuilder struct {
 	apiReq *core.ApiReq
 }
 
-func NewQueryOtherReqBuilder() *QueryOtherReqBuilder {
-	return &QueryOtherReqBuilder{core.NewApiReq()}
+func NewQueryReqBuilder() *QueryReqBuilder {
+	return &QueryReqBuilder{core.NewApiReq()}
 }
 
-func (builder *QueryOtherReqBuilder) PageSize(pageSize int) *QueryOtherReqBuilder {
+func (builder *QueryReqBuilder) PageSize(pageSize int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
 	return builder
 }
 
-func (builder *QueryOtherReqBuilder) PageNo(pageNo int) *QueryOtherReqBuilder {
+func (builder *QueryReqBuilder) PageNo(pageNo int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
 	return builder
 }
 
-func (builder *QueryOtherReqBuilder) CalcTotal(calcTotal int) *QueryOtherReqBuilder {
+func (builder *QueryReqBuilder) CalcTotal(calcTotal int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
 	return builder
 }
 
-func (builder *QueryOtherReqBuilder) Body(body *QueryOtherBody) *QueryOtherReqBuilder {
+func (builder *QueryReqBuilder) Body(body *QueryBody) *QueryReqBuilder {
 	builder.apiReq.Body = body
 	return builder
 }
 
-func (builder QueryOtherReqBuilder) Build() *QueryOtherReq {
-	return &QueryOtherReq{builder.apiReq}
+func (builder *QueryReqBuilder) Build() *QueryReq {
+	return &QueryReq{builder.apiReq}
 }
 
-type QueryOtherReq struct {
+type QueryReq struct {
 	apiReq *core.ApiReq
 }
 
-type QueryOtherBody struct {
-	StartTime        string `json:"start_time"`                    // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime          string `json:"end_time"`                      // 结束时间
-	Status           string `json:"status,omitempty"`              // 入库单状态
-	WarehouseNo      string `json:"warehouse_no,omitempty"`        // 仓库编号
-	StockinNo        string `json:"stockin_no,omitempty"`          // 入库单号
-	OtherStockinNo   string `json:"other_stockin_no,omitempty"`    // 其它入库业务单号
-	ReasonName       string `json:"reason_name,omitempty"`         // 入库原因
-	WmsStockChangeNo string `json:"wms_stock_change_no,omitempty"` // wms借调单号
-}
-
-type QueryOtherResp struct {
-	*core.ApiResp
-	core.CodeError
-	Data QueryOtherData `json:"data"`
-}
-
-type QueryOtherData struct {
-	Order      []*OtherOrder `json:"order"`
-	TotalCount int64         `json:"total_count"`
-}
-
-type OtherOrder struct {
-	StockinId          int     `json:"stockin_id"`                     // 入库单ID
-	OrderNo            string  `json:"order_no"`                       // 入库单号
-	Status             int     `json:"status"`                         // 状态
-	WarehouseNo        string  `json:"warehouse_no"`                   // 仓库编号
-	WarehouseName      string  `json:"warehouse_name"`                 // 仓库名称
-	StockinTime        int64   `json:"stockin_time"`                   // 入库时间
-	CreatedTime        int64   `json:"created_time"`                   // 建单时间
-	Reason             string  `json:"reason"`                         // 其他入库原因
-	Remark             string  `json:"remark"`                         // 备注
-	GoodsCount         float64 `json:"goods_count"`                    // 货品总数
-	LogisticsType      int     `json:"logistics_type"`                 // 物流类型
-	CheckTime          int64   `json:"check_time"`                     // 审核时间
-	SrcOrderNo         string  `json:"src_order_no"`                   // 业务单号
-	OperatorName       string  `json:"operator_name"`                  // 操作员
-	TotalPrice         float64 `json:"total_price"`                    // 总成本价
-	TotalCost          float64 `json:"total_cost"`                     // 入库总金额
-	LogisticsCompanyNo string  `json:"logistics_company_no,omitempty"` // 物流公司编号
-	WmsStockChangeNo   string  `json:"wms_stock_change_no,omitempty"`  // wms借调单号
-	DetailList         []struct {
-		StockinId        int     `json:"stockin_id"`            // 入库单ID
-		GoodsCount       float64 `json:"goods_count"`           // 数量
-		TotalCost        float64 `json:"total_cost"`            // 总成本
-		Remark           string  `json:"remark,omitempty"`      // 备注
-		RightNum         float64 `json:"right_num"`             // 调整后数量
-		GoodsUnit        string  `json:"goods_unit"`            // 单位
-		BatchNo          string  `json:"batch_no"`              // 批次号
-		RecId            int     `json:"rec_id"`                // 明细id
-		ProductionDate   string  `json:"production_date"`       // 生产日期
-		ExpireDate       string  `json:"expire_date"`           // 有效期
-		GoodsName        string  `json:"goods_name"`            // 货品名称
-		GoodsNo          string  `json:"goods_no"`              // 货品编号
-		SpecNo           string  `json:"spec_no"`               // 商家编码
-		Prop2            string  `json:"prop2,omitempty"`       // 自定义属性2
-		SpecName         string  `json:"spec_name"`             // 规格名称
-		SpecCode         string  `json:"spec_code,omitempty"`   // 规格码
-		BrandNo          string  `json:"brand_no"`              // 品牌编号
-		BrandName        string  `json:"brand_name"`            // 品牌名称
-		Defect           bool    `json:"defect"`                // 是否残品
-		CheckedCostPrice float64 `json:"checked_cost_price"`    // 入库价
-		PositionNo       string  `json:"position_no,omitempty"` // 货位编号
-	} `json:"detail_list" gorm:"serializer:json"` // 入库单明细
-}
-
-type PurchaseQueryReqBuilder struct {
-	apiReq *core.ApiReq
-}
-
-func NewPurchaseQueryReqBuilder() *PurchaseQueryReqBuilder {
-	return &PurchaseQueryReqBuilder{core.NewApiReq()}
-}
-
-func (builder *PurchaseQueryReqBuilder) PageSize(pageSize int) *PurchaseQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
-	return builder
-}
-
-func (builder *PurchaseQueryReqBuilder) PageNo(pageNo int) *PurchaseQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
-	return builder
-}
-
-func (builder *PurchaseQueryReqBuilder) CalcTotal(calcTotal int) *PurchaseQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
-	return builder
-}
-
-func (builder *PurchaseQueryReqBuilder) Body(body *PurchaseQueryBody) *PurchaseQueryReqBuilder {
-	builder.apiReq.Body = body
-	return builder
-}
-
-func (builder PurchaseQueryReqBuilder) Build() *PurchaseQueryReq {
-	return &PurchaseQueryReq{builder.apiReq}
-}
-
-type PurchaseQueryReq struct {
-	apiReq *core.ApiReq
-}
-type PurchaseQueryBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime     string `json:"end_time"`               // 结束时间
-	Status      string `json:"status,omitempty"`       // 10=已取消；20=编辑中；30=待审核；37=待质检；40=质检确认；80=已完成
-	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
-	StockinNo   string `json:"stockin_no,omitempty"`   // 入库单号
-	PurchaseNo  string `json:"purchase_no,omitempty"`  // 采购单号
-}
-
-type PurchaseQueryResp struct {
-	*core.ApiResp
-	core.CodeError
-	Data *PurchaseQueryData `json:"data"`
-}
-
-type PurchaseQueryData struct {
-	Order      []*PurchaseOrder `json:"order"`
-	TotalCount int64            `json:"total_count"`
-}
-
-type PurchaseOrder struct {
-	StockinId         int64   `json:"stockin_id"`          // 入库单唯一键
-	OrderNo           string  `json:"order_no"`            // 入库单号
-	WarehouseNo       string  `json:"warehouse_no"`        // 仓库编号
-	Status            int     `json:"status"`              // 入库单状态
-	Modified          int64   `json:"modified"`            // 最后修改时间
-	CreatedTime       int64   `json:"created_time"`        // 制单时间
-	Remark            string  `json:"remark"`              // 入库单备注
-	LogisticsTypeName string  `json:"logistics_type_name"` // 入库单物流类型
-	CheckTime         int64   `json:"check_time"`          // 入库单审核时间
-	PurchaseId        int64   `json:"purchase_id"`         // 采购单唯一键
-	PurchaseNo        string  `json:"purchase_no"`         // 采购单号
-	GoodsCount        float64 `json:"goods_count"`         // 货品数量
-	ProviderNo        string  `json:"provider_no"`         // 供应商编号
-	ProviderName      string  `json:"provider_name"`       // 供应商名称
-	LogisticsNo       string  `json:"logistics_no"`        // 物流单号
-	LogisticsName     string  `json:"logistics_name"`      // 物流公司
-	GoodsAmount       string  `json:"goods_amount"`        // 货品总价格，不包含优惠
-	TotalPrice        float64 `json:"total_price"`         // 税前总货款（折后）
-	TaxAmount         float64 `json:"tax_amount"`          // 税后总额（折后）
-	TotalStockinPrice string  `json:"total_stockin_price"` // 明细入库价*数量之和
-	FlagName          string  `json:"flag_name"`           // 标记名称
-	OperatorName      string  `json:"operator_name"`       // 经办人
-	DetailsList       []struct {
-		RecId            int64   `json:"rec_id"`                    // 入库单明细id
-		Num              float64 `json:"num"`                       // 数量
-		Discount         float64 `json:"discount"`                  // 折扣
-		CostPrice        float64 `json:"cost_price,omitempty"`      // 税前单价
-		SrcPrice         float64 `json:"src_price,omitempty"`       // 税前折后单价
-		TaxPrice         float64 `json:"tax_price,omitempty"`       // 税后单价（折后）
-		TaxAmount        float64 `json:"tax_amount,omitempty"`      // 税后金额（税后总价）
-		Tax              float64 `json:"tax,omitempty"`             // 税率
-		TotalCost        float64 `json:"total_cost,omitempty"`      // 税前金额（税前总价）
-		Remark           string  `json:"remark,omitempty"`          // 入库单明细备注
-		GoodsName        string  `json:"goods_name"`                // 货品名称
-		GoodsNo          string  `json:"goods_no"`                  // 货品编号
-		SpecNo           string  `json:"spec_no,omitempty"`         // 商家编码
-		SpecCode         string  `json:"spec_code,omitempty"`       // 规格码
-		SpecName         string  `json:"spec_name,omitempty"`       // 规格名称
-		Prop1            string  `json:"prop1,omitempty"`           // 采购明细自定义属性1
-		Prop2            string  `json:"prop2,omitempty"`           // 采购明细自定义属性2
-		Prop3            string  `json:"prop3,omitempty"`           // 采购明细自定义属性3
-		Prop4            string  `json:"prop4,omitempty"`           // 采购明细自定义属性4
-		BrandName        string  `json:"brand_name"`                // 品牌名称
-		UnitName         string  `json:"unit_name"`                 // 基本单位
-		BatchNo          string  `json:"batch_no,omitempty"`        // 批次，若无批次则返回空字符串
-		ExpireDate       string  `json:"expire_data,omitempty"`     // 有效期，若无有效期则返回空字符串
-		ProductionDate   string  `json:"production_date,omitempty"` // 生产日期，若无生产日期则返回空字符串
-		Defect           bool    `json:"defect,omitempty"`          // 是否残品
-		UnitRatio        float64 `json:"unit_ratio"`                // 换算系数
-		PurchaseUnitName string  `json:"purchase_unit_name"`        // 辅助单位
-		StockinPrice     float64 `json:"stockin_price,omitempty"`   // 入库价
-	} `json:"details_list" gorm:"serializer:json"` //入库单明细
-}
-
-type RefundQueryReqBuilder struct {
-	apiReq *core.ApiReq
-}
-
-func NewRefundQueryReqBuilder() *RefundQueryReqBuilder {
-	return &RefundQueryReqBuilder{core.NewApiReq()}
-}
-
-func (builder *RefundQueryReqBuilder) PageSize(pageSize int) *RefundQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
-	return builder
-}
-
-func (builder *RefundQueryReqBuilder) PageNo(pageNo int) *RefundQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
-	return builder
-}
-
-func (builder *RefundQueryReqBuilder) CalcTotal(calcTotal int) *RefundQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
-	return builder
-}
-
-func (builder *RefundQueryReqBuilder) Body(body *RefundQueryBody) *RefundQueryReqBuilder {
-	builder.apiReq.Body = body
-	return builder
-}
-
-func (builder *RefundQueryReqBuilder) Build() *RefundQueryReq {
-	return &RefundQueryReq{builder.apiReq}
-}
-
-type RefundQueryReq struct {
-	apiReq *core.ApiReq
-}
-
-type RefundQueryBody struct {
+type QueryBody struct {
 	StartTime          string `json:"start_time"`                      // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
 	EndTime            string `json:"end_time"`                        // 结束时间
 	Status             string `json:"status,omitempty"`                // 10=已取消；20=编辑中；30=待审核；80=已完成
@@ -270,18 +58,19 @@ type RefundQueryBody struct {
 	NeedGovSubsidyInfo int    `json:"need_gov_subsidy_info,omitempty"` // 是否需要国补信息
 }
 
-type RefundQueryResp struct {
+type QueryResp struct {
 	*core.ApiResp
 	core.CodeError
-	Data *RefundQueryData `json:"data"`
+	Data *QueryData `json:"data"`
 }
 
-type RefundQueryData struct {
-	Order      []*RefundOrder `json:"order"`
-	TotalCount int64          `json:"total_count"`
+type QueryData struct {
+	Order       []*Order       `json:"order"`
+	TotalCount  int64          `json:"total_count"`
+	SummaryData []*SummaryData `json:"summary_data"`
 }
 
-type RefundSummary struct {
+type SummaryData struct {
 	WarehouseNo string `json:"warehouse_no"` // 仓库编号
 	ShopData    []*struct {
 		ShopNo   string `json:"shop_no"` // 店铺编号
@@ -293,7 +82,7 @@ type RefundSummary struct {
 	} `json:"shop_data"` // 店铺维度分组汇总
 }
 
-type RefundOrder struct {
+type Order struct {
 	OrderNo              string                  `json:"order_no"`                                // 入库单号
 	Status               int                     `json:"status"`                                  // 入库单状态
 	AttachType           int                     `json:"attach_type"`                             // 关联类型
@@ -352,12 +141,12 @@ type RefundOrder struct {
 	TotalAmount          float64                 `json:"total_amount"`                            // 退货货品金额
 	VirWarehouseNo       string                  `json:"vir_warehouse_no"`                        // 虚拟仓编码
 	VirWarehouseName     string                  `json:"vir_warehouse_name"`                      // 虚拟仓名称
-	DetailsList          []RefundOrderDetail     `json:"details_list" gorm:"serializer:json"`     // 入库单明细
+	DetailsList          []OrderDetail           `json:"details_list" gorm:"serializer:json"`     // 入库单明细
 	GovSubsidyInfo       []*model.GovSubsidyInfo `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
 }
 
-// RefundOrderDetail 入库单明细
-type RefundOrderDetail struct {
+// OrderDetail 入库单明细
+type OrderDetail struct {
 	RecId                 int     `json:"rec_id"`                       // 入库单明细id(主键)
 	StockinId             int     `json:"stockin_id"`                   // 入库单id
 	RefundDetailId        string  `json:"refund_detail_id"`             // 退换单明细id

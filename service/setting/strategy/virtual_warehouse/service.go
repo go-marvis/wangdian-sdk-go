@@ -1,4 +1,4 @@
-package strategy
+package virtual_warehouse
 
 import (
 	"context"
@@ -7,13 +7,17 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type virtualWarehouse struct {
+type Service struct {
 	config *core.Config
+}
+
+func NewService(config *core.Config) *Service {
+	return &Service{config}
 }
 
 // Query 获取ERP虚拟仓、店铺、实体仓关联信息
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=setting.strategy.VirtualWarehouse.query
-func (s *virtualWarehouse) Query(ctx context.Context, req *VirtualWarehouseQueryReq, options ...core.ReqOptionFunc) (*VirtualWarehouseQueryResp, error) {
+func (s *Service) Query(ctx context.Context, req *QueryReq, options ...core.ReqOptionFunc) (*QueryResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "setting.strategy.VirtualWarehouse.query"
@@ -23,7 +27,7 @@ func (s *virtualWarehouse) Query(ctx context.Context, req *VirtualWarehouseQuery
 		return nil, err
 	}
 
-	resp := &VirtualWarehouseQueryResp{ApiResp: apiResp}
+	resp := &QueryResp{ApiResp: apiResp}
 	err = apiResp.UnmarshalBody(resp, s.config)
 	return resp, err
 }
@@ -33,7 +37,7 @@ func (s *virtualWarehouse) Query(ctx context.Context, req *VirtualWarehouseQuery
 // 时间跨度：start_time与end_time时间跨度不超过30天
 //
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=setting.strategy.VirtualWarehouse.orderSearch
-func (s *virtualWarehouse) OrderSearch(ctx context.Context, req *VirtualWarehouseOrderSearchReq, options ...core.ReqOptionFunc) (*VirtualWarehouseOrderSearchResp, error) {
+func (s *Service) OrderSearch(ctx context.Context, req *OrderSearchReq, options ...core.ReqOptionFunc) (*OrderSearchResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "setting.strategy.VirtualWarehouse.orderSearch"
@@ -43,7 +47,7 @@ func (s *virtualWarehouse) OrderSearch(ctx context.Context, req *VirtualWarehous
 		return nil, err
 	}
 
-	resp := &VirtualWarehouseOrderSearchResp{ApiResp: apiResp}
+	resp := &OrderSearchResp{ApiResp: apiResp}
 	err = apiResp.UnmarshalBody(resp, s.config)
 	return resp, err
 }

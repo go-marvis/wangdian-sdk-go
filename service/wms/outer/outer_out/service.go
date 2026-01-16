@@ -1,4 +1,4 @@
-package outer
+package outer_out
 
 import (
 	"context"
@@ -7,13 +7,17 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type outerOut struct {
+type Service struct {
 	config *core.Config
+}
+
+func NewService(config *core.Config) *Service {
+	return &Service{config}
 }
 
 // QueryWithDetail 外仓调整出库单查询
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=wms.outer.OuterOut.queryWithDetail
-func (s *outerOut) QueryWithDetail(ctx context.Context, req *QueryOuterOutReq, options ...core.ReqOptionFunc) (*QueryOuterOutResp, error) {
+func (s *Service) QueryWithDetail(ctx context.Context, req *QueryReq, options ...core.ReqOptionFunc) (*QueryResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "wms.outer.OuterOut.queryWithDetail"
@@ -23,7 +27,7 @@ func (s *outerOut) QueryWithDetail(ctx context.Context, req *QueryOuterOutReq, o
 		return nil, err
 	}
 
-	resp := &QueryOuterOutResp{ApiResp: apiResp}
+	resp := &QueryResp{ApiResp: apiResp}
 	err = apiResp.UnmarshalBody(resp, s.config)
 	return resp, err
 }

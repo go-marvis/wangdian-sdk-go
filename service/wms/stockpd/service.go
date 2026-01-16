@@ -1,4 +1,4 @@
-package wms
+package stockpd
 
 import (
 	"context"
@@ -7,13 +7,17 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type stockpd struct {
+type Service struct {
 	config *core.Config
+}
+
+func NewService(config *core.Config) *Service {
+	return &Service{config}
 }
 
 // QueryStockPdInDetail 盘点入库单查询
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=wms.StockPd.queryStockPdInDetail
-func (s *stockpd) QueryStockPdInDetail(ctx context.Context, req *QueryStockPdInDetailReq, options ...core.ReqOptionFunc) (*QueryStockPdInDetailResp, error) {
+func (s *Service) QueryStockPdInDetail(ctx context.Context, req *QueryStockPdInDetailReq, options ...core.ReqOptionFunc) (*QueryStockPdInDetailResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "wms.StockPd.queryStockPdInDetail"
@@ -30,7 +34,7 @@ func (s *stockpd) QueryStockPdInDetail(ctx context.Context, req *QueryStockPdInD
 
 // QueryStockPdOutDetail 盘点出库单查询
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=wms.StockPd.queryStockPdOutDetail
-func (s *stockpd) QueryStockPdOutDetail(ctx context.Context, req *QueryStockPdOutDetailReq, options ...core.ReqOptionFunc) (*QueryStockPdOutDetailResp, error) {
+func (s *Service) QueryStockPdOutDetail(ctx context.Context, req *QueryStockPdOutDetailReq, options ...core.ReqOptionFunc) (*QueryStockPdOutDetailResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "wms.StockPd.queryStockPdOutDetail"

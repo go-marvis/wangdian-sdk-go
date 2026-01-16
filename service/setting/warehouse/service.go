@@ -1,4 +1,4 @@
-package setting
+package warehouse
 
 import (
 	"context"
@@ -7,13 +7,17 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type warehouse struct {
+type Service struct {
 	config *core.Config
+}
+
+func NewService(config *core.Config) *Service {
+	return &Service{config}
 }
 
 // 获取ERP的仓库档案资料
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=setting.Warehouse.queryWarehouse
-func (w warehouse) QueryWarehouse(ctx context.Context, req *QueryWarehouseReq, options ...core.ReqOptionFunc) (*QueryWarehouseResp, error) {
+func (w Service) QueryWarehouse(ctx context.Context, req *QueryWarehouseReq, options ...core.ReqOptionFunc) (*QueryWarehouseResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "setting.Warehouse.queryWarehouse"
