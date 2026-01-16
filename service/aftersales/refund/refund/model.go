@@ -56,18 +56,18 @@ type SearchReqBody struct {
 	SettleTo                  string `json:"settle_to,omitempty"`                    // 结束时间
 	AgreeFrom                 string `json:"agree_from,omitempty"`                   // 审核起始时间
 	AgreeTo                   string `json:"agree_to,omitempty"`                     // 审核结束时间
-	Status                    int    `json:"status,omitempty"`                       // 退换单状态
-	StockinStatus             int    `json:"stockin_status,omitempty"`               // 入库状态
+	Status                    *int   `json:"status,omitempty"`                       // 退换单状态
+	StockinStatus             *int   `json:"stockin_status,omitempty"`               // 入库状态
 	ReturnWarehouseNos        string `json:"return_warehouse_nos,omitempty"`         // 退回仓库编号
-	Type                      int    `json:"type,omitempty"`                         // 退换单类型
-	FuzzyQuery                bool   `json:"fuzzy_query,omitempty"`                  // 模糊查询
-	ReturnMaskManualintercept bool   `json:"return_mask_manual_intercept,omitempty"` // 是否为拦截件
-	RefundMaskRejectReturn    bool   `json:"refund_mask_reject_return,omitempty"`    // 是否拒收
-	OrderType                 int    `json:"order_type,omitempty"`                   // 排序类型
-	RrStatus                  int    `json:"rr_status,omitempty"`                    // 平台状态
+	Type                      *int   `json:"type,omitempty"`                         // 退换单类型
+	FuzzyQuery                *bool  `json:"fuzzy_query,omitempty"`                  // 模糊查询
+	ReturnMaskManualintercept *bool  `json:"return_mask_manual_intercept,omitempty"` // 是否为拦截件
+	RefundMaskRejectReturn    *bool  `json:"refund_mask_reject_return,omitempty"`    // 是否拒收
+	OrderType                 *int   `json:"order_type,omitempty"`                   // 排序类型
+	RrStatus                  *int   `json:"rr_status,omitempty"`                    // 平台状态
 	CurrentPhaseTimeoutFrom   string `json:"current_phase_timeout_from,omitempty"`   // 退款成功时间起始
 	CurrentPhaseTimeoutTo     string `json:"current_phase_timeout_to,omitempty"`     // 退款成功时间结束
-	NeedGovSubsidyInfo        bool   `json:"need_gov_subsidy_info,omitempty"`        // 是否需要国补信息
+	NeedGovSubsidyInfo        *bool  `json:"need_gov_subsidy_info,omitempty"`        // 是否需要国补信息
 	RawRefundNos              string `json:"raw_refund_nos,omitempty"`               // 原始退款单号
 }
 

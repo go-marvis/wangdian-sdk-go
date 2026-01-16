@@ -44,7 +44,7 @@ type QueryShopReq struct {
 
 type QueryShopBody struct {
 	ShopNo     string `json:"shop_no,omitempty"`     // 店铺编号
-	PlatformId int    `json:"platform_id,omitempty"` // 平台id
+	PlatformId *int   `json:"platform_id,omitempty"` // 平台id
 }
 
 type QueryShopResp struct {

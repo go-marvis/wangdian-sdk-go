@@ -43,9 +43,9 @@ type QueryStockPdInDetailReq struct {
 }
 
 type QueryStockPdInDetailBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间
-	EndTime     string `json:"end_time"`               // 结束时间
-	TimeType    int    `json:"time_type,omitempty"`    // 时间类型
+	StartTime   string `json:"start_time,omitempty"`   // 开始时间
+	EndTime     string `json:"end_time,omitempty"`     // 结束时间
+	TimeType    *int   `json:"time_type,omitempty"`    // 时间类型
 	Status      string `json:"status,omitempty"`       // 入库单状态
 	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
 	StockinNo   string `json:"stockin_no,omitempty"`   // 入库单号
@@ -143,9 +143,9 @@ type QueryStockPdOutDetailReq struct {
 }
 
 type QueryStockPdOutDetailBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间
-	EndTime     string `json:"end_time"`               // 结束时间
-	TimeType    int    `json:"time_type,omitempty"`    // 时间类型
+	StartTime   string `json:"start_time,omitempty"`   // 开始时间
+	EndTime     string `json:"end_time,omitempty"`     // 结束时间
+	TimeType    *int   `json:"time_type,omitempty"`    // 时间类型
 	Status      string `json:"status,omitempty"`       // 入库单状态
 	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
 	StockoutNo  string `json:"stockout_no,omitempty"`  // 出库单号

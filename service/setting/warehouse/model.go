@@ -45,11 +45,11 @@ type QueryWarehouseReq struct {
 type QueryWarehouseBody struct {
 	WarehouseNo   string `json:"warehouse_no,omitempty"`   // 仓库编号
 	WarehouseName string `json:"warehouse_name,omitempty"` // 仓库名称
-	Type          int    `json:"type,omitempty"`           // 类型
-	SubType       int    `json:"sub_type,omitempty"`       // 子类型
+	Type          *int   `json:"type,omitempty"`           // 类型
+	SubType       *int   `json:"sub_type,omitempty"`       // 子类型
 	StartTime     string `json:"start_time,omitempty"`     // 开始时间
 	EndTime       string `json:"end_time,omitempty"`       // 结束时间
-	HideDelete    int    `json:"hide_delete"`              // 是否隐藏已停用数据
+	HideDelete    *int   `json:"hide_delete,omitempty"`    // 是否隐藏已停用数据
 }
 
 type QueryWarehouseResp struct {

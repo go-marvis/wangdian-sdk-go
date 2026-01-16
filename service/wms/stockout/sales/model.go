@@ -44,8 +44,8 @@ type QueryReq struct {
 }
 
 type QueryBody struct {
-	StartTime          string `json:"start_time"`                      // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime            string `json:"end_time"`                        // 结束时间
+	StartTime          string `json:"start_time,omitempty"`            // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
+	EndTime            string `json:"end_time,omitempty"`              // 结束时间
 	StatusType         string `json:"status_type,omitempty"`           // 出库单状态
 	Status             string `json:"status,omitempty"`                // 出库单状态详细
 	WarehouseNo        string `json:"warehouse_no,omitempty"`          // 仓库编号
@@ -53,14 +53,14 @@ type QueryBody struct {
 	ShopNos            string `json:"shop_nos,omitempty"`              // 店铺编号
 	SrcOrderNo         string `json:"src_order_no,omitempty"`          // 销售订单号
 	LogisticsNo        string `json:"logistics_no,omitempty"`          // 物流单号
-	NeedSn             bool   `json:"need_sn,omitempty"`               // 是否返回sn信息
-	Position           int    `json:"position,omitempty"`              // 是否按照货位排序
-	IsSlave            bool   `json:"is_slave,omitempty"`              // 是否使用从库查询
-	GetAnchor          bool   `json:"get_anchor,omitempty"`            // 是否获取主播信息
-	OrderType          int    `json:"order_type,omitempty"`            // 排序类型
-	NeedPickPosition   int    `json:"need_pick_position,omitempty"`    // 是否需要拣货位明细
-	NeedGovSubsidyInfo bool   `json:"need_gov_subsidy_info,omitempty"` // 是否需要国补信息
-	SrcTid             bool   `json:"src_tid,omitempty"`               //  原始单号
+	NeedSn             *bool  `json:"need_sn,omitempty"`               // 是否返回sn信息
+	Position           *int   `json:"position,omitempty"`              // 是否按照货位排序
+	IsSlave            *bool  `json:"is_slave,omitempty"`              // 是否使用从库查询
+	GetAnchor          *bool  `json:"get_anchor,omitempty"`            // 是否获取主播信息
+	OrderType          *int   `json:"order_type,omitempty"`            // 排序类型
+	NeedPickPosition   *int   `json:"need_pick_position,omitempty"`    // 是否需要拣货位明细
+	NeedGovSubsidyInfo *bool  `json:"need_gov_subsidy_info,omitempty"` // 是否需要国补信息
+	SrcTid             *bool  `json:"src_tid,omitempty"`               //  原始单号
 }
 
 type QueryResp struct {
