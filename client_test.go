@@ -52,11 +52,13 @@ func Test_aftersales_refund_refund(t *testing.T) {
 }
 
 func Test_goods_query(t *testing.T) {
+	var hideDeleted = false
 	resp, err := api.Goods.Goods.QueryWithSpec(ctx, goods.NewQueryReqBuilder().
 		PageNo(0).PageSize(1).CalcTotal(1).
 		Body(&goods.QueryReqBody{
-			StartTime: "2025-12-30 12:00:00",
-			EndTime:   "2025-12-30 13:00:00"}).
+			HideDeleted: &hideDeleted,
+			StartTime:   "2025-12-30 12:00:00",
+			EndTime:     "2025-12-30 13:00:00"}).
 		Build())
 
 	assert.Nil(t, err)

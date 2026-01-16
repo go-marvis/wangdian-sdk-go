@@ -48,7 +48,7 @@ type QueryReqBody struct {
 	BrandName   string `json:"brand_name,omitempty"`   // 品牌名称
 	ClassName   string `json:"class_name,omitempty"`   // 分类名称
 	Barcode     string `json:"barcode,omitempty"`      // 条码
-	HideDeleted bool   `json:"hide_deleted,omitempty"` // 是否隐藏已删除的货品。
+	HideDeleted *bool  `json:"hide_deleted,omitempty"` // 是否隐藏已删除的货品。
 	StartTime   string `json:"start_time"`             // 开始时间
 	EndTime     string `json:"end_time"`               // 结束时间
 }
