@@ -42,11 +42,11 @@ type QueryReq struct {
 	apiReq *core.ApiReq
 }
 type QueryBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间
-	EndTime     string `json:"end_time"`               // 结束时间
+	StartTime   string `json:"start_time,omitempty"`   // 开始时间
+	EndTime     string `json:"end_time,omitempty"`     // 结束时间
 	OuterOutNo  string `json:"outer_out_no,omitempty"` // 出库单号
 	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
-	TimeType    int    `json:"time_type,omitempty"`    // 时间类型  1为建单时间，2为修改时间，默认为建单时间
+	TimeType    *int   `json:"time_type,omitempty"`    // 时间类型  1为建单时间，2为修改时间，默认为建单时间
 	LogisticsNo string `json:"logistics_no,omitempty"` // 物流单号
 	OrderType   string `json:"order_type,omitempty"`   // 出库类型
 	Status      string `json:"status,omitempty"`       // 状态

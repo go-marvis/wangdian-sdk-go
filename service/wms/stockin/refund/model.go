@@ -44,18 +44,18 @@ type QueryReq struct {
 }
 
 type QueryBody struct {
-	StartTime          string `json:"start_time"`                      // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime            string `json:"end_time"`                        // 结束时间
+	StartTime          string `json:"start_time,omitempty"`            // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
+	EndTime            string `json:"end_time,omitempty"`              // 结束时间
 	Status             string `json:"status,omitempty"`                // 10=已取消；20=编辑中；30=待审核；80=已完成
 	WarehouseNo        string `json:"warehouse_no,omitempty"`          // 仓库编号
 	StockinNo          string `json:"stockin_no,omitempty"`            // 入库单号
 	RefundNo           string `json:"refund_no,omitempty"`             // 采购单号
 	ShopNos            string `json:"shop_nos,omitempty"`              // 店铺编号
-	TimeType           int    `json:"time_type,omitempty"`             // 时间条件类型 0:修改时间; 1:入库时间 不传默认为0
-	IsSlave            bool   `json:"is_slave,omitempty"`              // 是否使用从库查询
-	NeedSn             bool   `json:"need_sn,omitempty"`               // 是否返回sn信息
-	NeedSummary        bool   `json:"need_summary,omitempty"`          // 是否需要汇总数据
-	NeedGovSubsidyInfo int    `json:"need_gov_subsidy_info,omitempty"` // 是否需要国补信息
+	TimeType           *int   `json:"time_type,omitempty"`             // 时间条件类型 0:修改时间; 1:入库时间 不传默认为0
+	IsSlave            *bool  `json:"is_slave,omitempty"`              // 是否使用从库查询
+	NeedSn             *bool  `json:"need_sn,omitempty"`               // 是否返回sn信息
+	NeedSummary        *bool  `json:"need_summary,omitempty"`          // 是否需要汇总数据
+	NeedGovSubsidyInfo *int   `json:"need_gov_subsidy_info,omitempty"` // 是否需要国补信息
 }
 
 type QueryResp struct {

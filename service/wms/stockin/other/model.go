@@ -43,8 +43,8 @@ type QueryReq struct {
 }
 
 type QueryBody struct {
-	StartTime        string `json:"start_time"`                    // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime          string `json:"end_time"`                      // 结束时间
+	StartTime        string `json:"start_time,omitempty"`          // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
+	EndTime          string `json:"end_time,omitempty"`            // 结束时间
 	Status           string `json:"status,omitempty"`              // 入库单状态
 	WarehouseNo      string `json:"warehouse_no,omitempty"`        // 仓库编号
 	StockinNo        string `json:"stockin_no,omitempty"`          // 入库单号

@@ -111,11 +111,11 @@ type OrderSearchReq struct {
 }
 
 type OrderSearchBody struct {
-	StartTime          string `json:"start_time"`                     // 开始时间
-	EndTime            string `json:"end_time"`                       // 结束时间
+	StartTime          string `json:"start_time,omitempty"`           // 开始时间
+	EndTime            string `json:"end_time,omitempty"`             // 结束时间
 	VirtualWarehouseNo string `json:"virtual_warehouse_no,omitempty"` // 虚拟仓编号
 	WarehouseNo        string `json:"warehouse_no,omitempty"`         // 实体仓编号
-	OrderType          int    `json:"order_type,omitempty"`           // 单据类型
+	OrderType          *int   `json:"order_type,omitempty"`           // 单据类型
 }
 
 type OrderSearchResp struct {

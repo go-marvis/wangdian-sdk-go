@@ -43,22 +43,22 @@ type QueryReq struct {
 }
 
 type QueryBody struct {
-	StartTime          string `json:"start_time"`                      //开始时间
-	EndTime            string `json:"end_time"`                        //结束时间
+	StartTime          string `json:"start_time,omitempty"`            //开始时间
+	EndTime            string `json:"end_time,omitempty"`              //结束时间
 	WarehouseNo        string `json:"warehouse_no,omitempty"`          //仓库编号
 	Status             string `json:"status,omitempty"`                //订单状态
 	TradeNo            string `json:"trade_no,omitempty"`              //订单编号
 	ShopNo             string `json:"shop_no,omitempty"`               //店铺编号
 	LogisticsNo        string `json:"logistics_no,omitempty"`          //物流单号
 	SrcTid             string `json:"src_tid,omitempty"`               //原始单号
-	IsSlave            bool   `json:"is_slave,omitempty"`              //是否使用从库查询
-	CalSharePostAmount bool   `json:"cal_share_post_amount,omitempty"` //是否计算分摊邮费
+	IsSlave            *bool  `json:"is_slave,omitempty"`              //是否使用从库查询
+	CalSharePostAmount *bool  `json:"cal_share_post_amount,omitempty"` //是否计算分摊邮费
 	TradeFrom          string `json:"trade_from,omitempty"`            //订单来源
-	OrderType          int    `json:"order_type,omitempty"`            //排序类型
-	TimeType           int    `json:"time_type,omitempty"`             //时间类型
+	OrderType          *int   `json:"order_type,omitempty"`            //排序类型
+	TimeType           *int   `json:"time_type,omitempty"`             //时间类型
 	NeedGiftRelation   *bool  `json:"need_gift_relation,omitempty"`    //是否返回赠品关联关系
-	AccurateQuery      bool   `json:"accurate_query,omitempty"`        //是否强制指定src_tid精准查询
-	CutLogisticsNo     bool   `json:"cut_logistics_no,omitempty"`      //是否截取物流单号
+	AccurateQuery      *bool  `json:"accurate_query,omitempty"`        //是否强制指定src_tid精准查询
+	CutLogisticsNo     *bool  `json:"cut_logistics_no,omitempty"`      //是否截取物流单号
 }
 
 type QueryResp struct {

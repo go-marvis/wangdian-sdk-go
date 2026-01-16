@@ -42,8 +42,8 @@ type QueryReq struct {
 	apiReq *core.ApiReq
 }
 type QueryBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime     string `json:"end_time"`               // 结束时间
+	StartTime   string `json:"start_time,omitempty"`   // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
+	EndTime     string `json:"end_time,omitempty"`     // 结束时间
 	Status      string `json:"status,omitempty"`       // 10=已取消；20=编辑中；30=待审核；37=待质检；40=质检确认；80=已完成
 	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
 	StockinNo   string `json:"stockin_no,omitempty"`   // 入库单号

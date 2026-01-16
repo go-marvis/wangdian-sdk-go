@@ -45,13 +45,13 @@ type QueryReq struct {
 }
 
 type QueryBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime     string `json:"end_time"`               // 结束时间
-	TimeType    int    `json:"time_type,omitempty"`    // 时间条件类型 0:修改时间; 1:入库时间 不传默认为0
+	StartTime   string `json:"start_time,omitempty"`   // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
+	EndTime     string `json:"end_time,omitempty"`     // 结束时间
+	TimeType    *int   `json:"time_type,omitempty"`    // 时间条件类型 0:修改时间; 1:入库时间 不传默认为0
 	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
 	SrcOrderNo  string `json:"src_order_no,omitempty"` // 业务单号
 	StockoutNo  string `json:"stockout_no,omitempty"`  // 入库单号
-	Status      int    `json:"status,omitempty"`       // 业务单据状态
+	Status      *int   `json:"status,omitempty"`       // 业务单据状态
 	ReasonName  string `json:"reason_name,omitempty"`  // 出库原因
 }
 
