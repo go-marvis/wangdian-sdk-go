@@ -106,7 +106,7 @@ type GoodsSpec struct {
 	Barcode          string  `json:"barcode"`                       // 主条码
 	SpecName         string  `json:"spec_name,omitempty"`           // 规格名称
 	LowestPrice      float64 `json:"lowest_price,omitempty"`        // 最低价
-	RetailPrice      float64 `json:"retail_price"`                  // 零售价
+	RetailPrice      float64 `json:"retail_price,omitempty"`        // 零售价
 	WholesalePrice   float64 `json:"wholesale_price,omitempty"`     // 批发价
 	MemberPrice      float64 `json:"member_price,omitempty"`        // 会员价
 	MarketPrice      float64 `json:"market_price,omitempty"`        // 市场价
@@ -147,10 +147,10 @@ type GoodsSpec struct {
 	BarcodeCount     int     `json:"barcode_count"`                 // 条码个数
 	SaleScore        float64 `json:"sale_score,omitempty"`          // 销售积分
 	IsNotNeedExamine int     `json:"is_not_need_examine,omitempty"` // 是否出库不验货
-	SpecUnit         int     `json:"spec_unit"`                     // 基本单位id
-	SpecAuxUnit      int     `json:"spec_aux_unit"`                 // 辅助单位id
-	ExchangeName     string  `json:"exchange_name"`                 // 备注换货货品的换货识别符
-	MaxLimitNum      float64 `json:"max_limit_num"`                 // 备注换货货品的最大限制数量
+	SpecUnit         int     `json:"spec_unit,omitempty"`           // 基本单位id
+	SpecAuxUnit      int     `json:"spec_aux_unit,omitempty"`       // 辅助单位id
+	ExchangeName     string  `json:"exchange_name,omitempty"`       // 备注换货货品的换货识别符
+	MaxLimitNum      float64 `json:"max_limit_num,omitempty"`       // 备注换货货品的最大限制数量
 	BarcodeList      []struct {
 		Barcode  string `json:"barcode"`   // 条码
 		Type     int    `json:"type"`      // 类型
