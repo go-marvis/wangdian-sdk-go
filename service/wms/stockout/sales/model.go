@@ -1,4 +1,4 @@
-package stockout
+package sales
 
 import (
 	"fmt"
@@ -7,156 +7,43 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/service/model"
 )
 
-type OtherQueryReqBuilder struct {
+type QueryReqBuilder struct {
 	apiReq *core.ApiReq
 }
 
-func NewOtherQueryReqBuilder() *OtherQueryReqBuilder {
-	return &OtherQueryReqBuilder{core.NewApiReq()}
+func NewQueryReqBuilder() *QueryReqBuilder {
+	return &QueryReqBuilder{core.NewApiReq()}
 }
 
-func (builder *OtherQueryReqBuilder) PageSize(pageSize int) *OtherQueryReqBuilder {
+func (builder *QueryReqBuilder) PageSize(pageSize int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
 	return builder
 }
 
-func (builder *OtherQueryReqBuilder) PageNo(pageNo int) *OtherQueryReqBuilder {
+func (builder *QueryReqBuilder) PageNo(pageNo int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
 	return builder
 }
 
-func (builder *OtherQueryReqBuilder) CalcTotal(calcTotal int) *OtherQueryReqBuilder {
+func (builder *QueryReqBuilder) CalcTotal(calcTotal int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
 	return builder
 }
 
-func (builder *OtherQueryReqBuilder) Body(body *OtherQueryBody) *OtherQueryReqBuilder {
-	builder.apiReq.Body = body
-	return builder
-
-}
-
-func (builder *OtherQueryReqBuilder) Build() *OtherQueryReq {
-	return &OtherQueryReq{builder.apiReq}
-}
-
-type OtherQueryReq struct {
-	apiReq *core.ApiReq
-}
-
-type OtherQueryBody struct {
-	StartTime   string `json:"start_time"`             // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
-	EndTime     string `json:"end_time"`               // 结束时间
-	TimeType    int    `json:"time_type,omitempty"`    // 时间条件类型 0:修改时间; 1:入库时间 不传默认为0
-	WarehouseNo string `json:"warehouse_no,omitempty"` // 仓库编号
-	SrcOrderNo  string `json:"src_order_no,omitempty"` // 业务单号
-	StockoutNo  string `json:"stockout_no,omitempty"`  // 入库单号
-	Status      int    `json:"status,omitempty"`       // 业务单据状态
-	ReasonName  string `json:"reason_name,omitempty"`  // 出库原因
-}
-
-type OtherQueryResp struct {
-	*core.ApiResp
-	core.CodeError
-	Data *OtherQueryData `json:"data"`
-}
-
-type OtherQueryData struct {
-	Order      []*OtherOrder `json:"order"`
-	TotalCount int64         `json:"total_count"`
-}
-
-type OtherOrder struct {
-	StockoutId            int     `json:"stockout_id"`              // 出库单id
-	OrderNo               string  `json:"order_no"`                 // 出库单编号
-	SrcOrderNo            string  `json:"src_order_no"`             // 业务单号
-	WarehouseNo           string  `json:"warehouse_no"`             // 出库的仓库编号
-	ConsignTime           int64   `json:"consign_time"`             // 出库时间
-	OrderType             int     `json:"order_type"`               // 源单据类别
-	Status                int     `json:"status"`                   // 状态
-	GoodsCount            float64 `json:"goods_count"`              // 出库数量
-	PostFee               float64 `json:"post_fee"`                 // 邮费
-	LogisticsNo           string  `json:"logistics_no"`             // 物流单号
-	ReceiverName          string  `json:"receiver_name"`            // 收件人姓名
-	ReceiverProvince      string  `json:"receiver_province"`        // 省
-	ReceiverCity          string  `json:"receiver_city"`            // 城市
-	ReceiverDistrict      string  `json:"receiver_district"`        // 地区
-	ReceiverAddress       string  `json:"receiver_address"`         // 收件地址
-	ReceiverMobile        string  `json:"receiver_mobile"`          // 收件人手机号
-	Remark                string  `json:"remark"`                   // 出库单备注
-	Weight                float64 `json:"weight"`                   // 实际称重重量(Kg)
-	OperatorName          string  `json:"operator_name"`            // 制单人
-	GoodsTotalCost        string  `json:"goods_total_cost"`         // 总成本
-	GoodsTotalAmount      float64 `json:"goods_total_amount"`       // 总货款
-	Modified              int64   `json:"modified"`                 // 最后修改时间
-	Reason                string  `json:"reason"`                   // 出库原因
-	CheckedGoodsTotalCost float64 `json:"checked_goods_total_cost"` // 瞬时成本总额
-	LogisticsCompanyNo    string  `json:"logistics_company_no"`     // 物流公司编号
-	WarehouseName         string  `json:"warehouse_name"`           // 仓库名称
-	DetailList            []struct {
-		RecId               int                    `json:"rec_id"`                 // 出库单详情id
-		StockoutId          int                    `json:"stockout_id"`            // 出库单id
-		GoodsCount          float64                `json:"goods_count"`            // 货品数量
-		TotalAmount         float64                `json:"total_amount,omitempty"` // 总成本
-		ExpireAate          string                 `json:"expire_date"`            // 有效期
-		Remark              string                 `json:"remark,omitempty"`       // 出库单详情备注
-		BrandNo             string                 `json:"brand_no"`               // 品牌编号
-		BrandName           string                 `json:"brand_name"`             // 品牌名称
-		GoodsName           string                 `json:"goods_name"`             // 货品名称
-		GoodsNo             string                 `json:"goods_no"`               // 货品编码
-		SpecNo              string                 `json:"spec_no,omitempty"`      // 商家编码
-		SpecName            string                 `json:"spec_name"`              // 规格名称
-		SpecCode            string                 `json:"spec_code,omitempty"`    // 规格码
-		Defect              bool                   `json:"defect,omitempty"`       // 是否残次品
-		CostPrice           float64                `json:"cost_price,omitempty"`   // 成本价
-		Weight              float64                `json:"weight,omitempty"`       // 总重量
-		GoodsType           int                    `json:"goods_type"`             // 货品类型
-		UnitName            string                 `json:"unit_name,omitempty"`    // 单位
-		BaseUnitId          int                    `json:"base_unit_id"`           // 单位id
-		BatchNo             string                 `json:"batch_no"`               // 批次号
-		PositionId          int                    `json:"position_id,omitempty"`  // 货位id
-		PositionNo          string                 `json:"position_no,omitempty"`  // 货位编号
-		PositionDetailsList []model.PositionDetail `json:"position_details_list"`  // 货位明细
-	} `json:"detail_list"  gorm:"serializer:json"` // 出库单明细
-}
-
-type SalesQueryReqBuilder struct {
-	apiReq *core.ApiReq
-}
-
-func NewSalesQueryReqBuilder() *SalesQueryReqBuilder {
-	return &SalesQueryReqBuilder{core.NewApiReq()}
-}
-
-func (builder *SalesQueryReqBuilder) PageSize(pageSize int) *SalesQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
-	return builder
-}
-
-func (builder *SalesQueryReqBuilder) PageNo(pageNo int) *SalesQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
-	return builder
-}
-
-func (builder *SalesQueryReqBuilder) CalcTotal(calcTotal int) *SalesQueryReqBuilder {
-	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
-	return builder
-}
-
-func (builder *SalesQueryReqBuilder) Body(body *SalesQueryBody) *SalesQueryReqBuilder {
+func (builder *QueryReqBuilder) Body(body *QueryBody) *QueryReqBuilder {
 	builder.apiReq.Body = body
 	return builder
 }
 
-func (builder *SalesQueryReqBuilder) Build() *SalesQueryReq {
-	return &SalesQueryReq{builder.apiReq}
+func (builder *QueryReqBuilder) Build() *QueryReq {
+	return &QueryReq{builder.apiReq}
 }
 
-type SalesQueryReq struct {
+type QueryReq struct {
 	apiReq *core.ApiReq
 }
 
-type SalesQueryBody struct {
+type QueryBody struct {
 	StartTime          string `json:"start_time"`                      // 开始时间, 入库单修改时间, yyyy-MM-dd HH:mm:ss格式
 	EndTime            string `json:"end_time"`                        // 结束时间
 	StatusType         string `json:"status_type,omitempty"`           // 出库单状态
@@ -176,18 +63,18 @@ type SalesQueryBody struct {
 	SrcTid             bool   `json:"src_tid,omitempty"`               //  原始单号
 }
 
-type SalesQueryResp struct {
+type QueryResp struct {
 	*core.ApiResp
 	core.CodeError
-	Data *SalesQueryData `json:"data"`
+	Data *QueryData `json:"data"`
 }
 
-type SalesQueryData struct {
-	Order      []*SalesOrder `json:"order"`
-	TotalCount int64         `json:"total_count"`
+type QueryData struct {
+	Order      []*Order `json:"order"`
+	TotalCount int64    `json:"total_count"`
 }
 
-type SalesOrder struct {
+type Order struct {
 	StockoutId           int                     `json:"stockout_id"`            // 出库单ID
 	OrderNo              string                  `json:"order_no"`               // 出库单号
 	VirtualWarehouseNo   string                  `json:"virtual_warehouse_no"`   // 虚拟仓编号
@@ -293,7 +180,7 @@ type SalesOrder struct {
 	FenxiaoTid           string                  `json:"fenxiao_tid"`                             // 分销原始单号
 	FenxiaoNickNo        string                  `json:"fenxiao_nick_no"`                         // 分销商编号
 	LogisticsList        []model.LogisticsDetail `json:"logistics_list" gorm:"serializer:json"`   // 物流单列表
-	DetailsList          []SalesOrderDetail      `json:"details_list" gorm:"serializer:json"`     // 销售出库单详情
+	DetailsList          []OrderDetail           `json:"details_list" gorm:"serializer:json"`     // 销售出库单详情
 	AnchorName           string                  `json:"anchor_name"`                             // 主播
 	AssistAchorName      string                  `json:"assist_achor_name"`                       // 助播
 	ControlAchorName     string                  `json:"control_achor_name"`                      // 场控
@@ -305,78 +192,78 @@ type SalesOrder struct {
 	GovSubsidyInfo       []*model.GovSubsidyInfo `json:"gov_subsidy_info" gorm:"serializer:json"` // 国补信息
 }
 
-type SalesOrderDetail struct {
-	RecId               int     `json:"rec_id"`              // 销售出库单详情的id
-	StockoutId          int     `json:"stockout_id"`         // 出库单id
-	SrcOrderDetailId    int     `json:"src_order_detail_id"` // 订单明细id
-	SpecId              int     `json:"spec_id"`             // 单品id
-	SpecNo              string  `json:"spec_no"`             // 商家编码
-	GoodsCount          float64 `json:"goods_count"`         // 货品数量
-	TotalAmount         float64 `json:"total_amount"`        // 总成本
-	SellPrice           float64 `json:"sell_price"`          // 成交价
-	Remark              string  `json:"remark"`              // 出库单明细备注
-	GoodsName           string  `json:"goods_name"`          // 货品名称
-	GoodsNo             string  `json:"goods_no"`            // 货品编号
-	SpecName            string  `json:"spec_name"`           // 规格名称
-	SpecCode            string  `json:"spec_code"`           // 规格码
-	CostPrice           float64 `json:"cost_price"`          // 货品成本
-	Weight              float64 `json:"weight"`              // 总重量
-	GoodsId             int     `json:"goods_id"`            // 货品id
-	Prop1               string  `json:"prop1"`               // 规格自定义属性1
-	Prop2               string  `json:"prop2"`               // 规格自定义属性2
-	Prop3               string  `json:"prop3"`               // 规格自定义属性3
-	Prop4               string  `json:"prop4"`               // 规格自定义属性4
-	Prop5               string  `json:"prop5"`               // 规格自定义属性5
-	Prop6               string  `json:"prop6"`               // 规格自定义属性6
-	PlatformId          int     `json:"platform_id"`         // 平台id
-	RefundStatus        int     `json:"refund_status"`       // 退款状态
-	MarketPrice         float64 `json:"market_price"`        // 单价/货品原单价
-	Discount            float64 `json:"discount"`            // 货品总优惠
-	SharePrice          float64 `json:"share_price"`         // 货品成交价
-	ShareAmount         float64 `json:"share_amount"`        // 总货款/货品成交总价
-	TaxRate             float64 `json:"tax_rate"`            // 税率
-	Barcode             string  `json:"barcode"`             // 主条码
-	UnitName            string  `json:"unit_name"`           // 基本单位名称
-	SaleOrderId         int     `json:"sale_order_id"`       // 订单货品(子订单)id
-	GiftType            int     `json:"gift_type"`           // 是否是赠品
-	SrcOid              string  `json:"src_oid"`             // 原始子订单号
-	SrcTid              string  `json:"src_tid"`             // 子单原始订单号
-	FromMask            int     `json:"from_mask"`           // 订单内部来源
-	GoodsType           int     `json:"goods_type"`          // 货品类型
-	GoodProp1           string  `json:"good_prop1"`          // 货品自定义属性1
-	GoodProp2           string  `json:"good_prop2"`          // 货品自定义属性2
-	GoodProp3           string  `json:"good_prop3"`          // 货品自定义属性3
-	GoodProp4           string  `json:"good_prop4"`          // 货品自定义属性4
-	GoodProp5           string  `json:"good_prop5"`          // 货品自定义属性5
-	GoodProp6           string  `json:"good_prop6"`          // 货品自定义属性6
-	SnList              string  `json:"sn_list"`             // sn_list
-	SuiteNo             string  `json:"suite_no"`            // 组合装编码
-	SuiteNum            float64 `json:"suite_num"`           // 组合装数量
-	SharePostAmount     float64 `json:"share_post_amount"`   // 分摊邮费
-	Paid                float64 `json:"paid"`                // 已付
-	IsPackage           bool    `json:"is_package"`          // 是否包装
-	BrandNo             string  `json:"brand_no"`            // 品牌编号
-	BrandName           string  `json:"brand_name"`          // 品牌名称
-	SrcOrderType        int     `json:"src_order_type"`      // 源单据类别
-	BaseUnitId          int     `json:"base_unit_id"`        // 基本单位id
-	UnitId              int     `json:"unit_id"`             // 辅助单位
-	UnitRatio           float64 `json:"unit_ratio"`          // 单位换算
-	Num2                float64 `json:"num2"`                // 辅助数量
-	Num                 float64 `json:"num"`                 // 货品数量
-	PositionId          int     `json:"position_id"`         // 出库货位id
-	BatchId             int     `json:"batch_id"`            // 指定出库批次
-	IsExamined          int     `json:"is_examined"`         // 是否验货
-	ExpireDate          int64   `json:"expire_date"`         // 有效期
-	ScanType            int     `json:"scan_type"`           // 扫描方式
-	ModifiedDate        string  `json:"modified_date"`       // 最后修改时间
-	CreatedDate         string  `json:"created_date"`        // 创建时间
-	ClassName           string  `json:"class_name"`          // 分类
-	ApiGoodsId          string  `json:"api_goods_id"`        // 平台货品id
-	ApiSpecId           string  `json:"api_spec_id"`         // 平台规格id
-	PackScore           float64 `json:"pack_score"`          // 打包积分
-	PickScore           float64 `json:"pick_score"`          // 拣货积分
-	ScanScore           float64 `json:"scan_score"`          // 验货积分
-	ApiBoodsName        string  `json:"api_goods_name"`      // 平台货品名称
+type OrderDetail struct {
+	RecId               int     `json:"rec_id"`                  // 销售出库单详情的id
+	StockoutId          int     `json:"stockout_id"`             // 出库单id
+	SrcOrderDetailId    int     `json:"src_order_detail_id"`     // 订单明细id
+	SpecId              int     `json:"spec_id"`                 // 单品id
+	SpecNo              string  `json:"spec_no"`                 // 商家编码
+	GoodsCount          float64 `json:"goods_count"`             // 货品数量
+	TotalAmount         float64 `json:"total_amount,omitempty"`  // 总成本
+	SellPrice           float64 `json:"sell_price"`              // 成交价
+	Remark              string  `json:"remark"`                  // 出库单明细备注
+	GoodsName           string  `json:"goods_name"`              // 货品名称
+	GoodsNo             string  `json:"goods_no"`                // 货品编号
+	SpecName            string  `json:"spec_name"`               // 规格名称
+	SpecCode            string  `json:"spec_code,omitempty"`     // 规格码
+	CostPrice           float64 `json:"cost_price,omitempty"`    // 货品成本
+	Weight              float64 `json:"weight,omitempty"`        // 总重量
+	GoodsId             int     `json:"goods_id"`                // 货品id
+	Prop1               string  `json:"prop1,omitempty"`         // 规格自定义属性1
+	Prop2               string  `json:"prop2,omitempty"`         // 规格自定义属性2
+	Prop3               string  `json:"prop3,omitempty"`         // 规格自定义属性3
+	Prop4               string  `json:"prop4,omitempty"`         // 规格自定义属性4
+	Prop5               string  `json:"prop5,omitempty"`         // 规格自定义属性5
+	Prop6               string  `json:"prop6,omitempty"`         // 规格自定义属性6
+	PlatformId          int     `json:"platform_id"`             // 平台id
+	RefundStatus        int     `json:"refund_status,omitempty"` // 退款状态
+	MarketPrice         float64 `json:"market_price"`            // 单价/货品原单价
+	Discount            float64 `json:"discount"`                // 货品总优惠
+	SharePrice          float64 `json:"share_price"`             // 货品成交价
+	ShareAmount         float64 `json:"share_amount"`            // 总货款/货品成交总价
+	TaxRate             float64 `json:"tax_rate,omitempty"`      // 税率
+	Barcode             string  `json:"barcode"`                 // 主条码
+	UnitName            string  `json:"unit_name,omitempty"`     // 基本单位名称
+	SaleOrderId         int     `json:"sale_order_id"`           // 订单货品(子订单)id
+	GiftType            int     `json:"gift_type"`               // 是否是赠品
+	SrcOid              string  `json:"src_oid"`                 // 原始子订单号
+	SrcTid              string  `json:"src_tid"`                 // 子单原始订单号
+	FromMask            int     `json:"from_mask,omitempty"`     // 订单内部来源
+	GoodsType           int     `json:"goods_type"`              // 货品类型
+	GoodProp1           string  `json:"good_prop1,omitempty"`    // 货品自定义属性1
+	GoodProp2           string  `json:"good_prop2,omitempty"`    // 货品自定义属性2
+	GoodProp3           string  `json:"good_prop3,omitempty"`    // 货品自定义属性3
+	GoodProp4           string  `json:"good_prop4,omitempty"`    // 货品自定义属性4
+	GoodProp5           string  `json:"good_prop5,omitempty"`    // 货品自定义属性5
+	GoodProp6           string  `json:"good_prop6,omitempty"`    // 货品自定义属性6
+	SnList              string  `json:"sn_list,omitempty"`       // sn_list
+	SuiteNo             string  `json:"suite_no,omitempty"`      // 组合装编码
+	SuiteNum            float64 `json:"suite_num,omitempty"`     // 组合装数量
+	SharePostAmount     float64 `json:"share_post_amount"`       // 分摊邮费
+	Paid                float64 `json:"paid"`                    // 已付
+	IsPackage           bool    `json:"is_package,omitempty"`    // 是否包装
+	BrandNo             string  `json:"brand_no"`                // 品牌编号
+	BrandName           string  `json:"brand_name"`              // 品牌名称
+	SrcOrderType        int     `json:"src_order_type"`          // 源单据类别
+	BaseUnitId          int     `json:"base_unit_id"`            // 基本单位id
+	UnitId              int     `json:"unit_id,omitempty"`       // 辅助单位
+	UnitRatio           float64 `json:"unit_ratio"`              // 单位换算
+	Num2                float64 `json:"num2"`                    // 辅助数量
+	Num                 float64 `json:"num"`                     // 货品数量
+	PositionId          int     `json:"position_id,omitempty"`   // 出库货位id
+	BatchId             int     `json:"batch_id,omitempty"`      // 指定出库批次
+	IsExamined          int     `json:"is_examined,omitempty"`   // 是否验货
+	ExpireDate          int64   `json:"expire_date,omitempty"`   // 有效期
+	ScanType            int     `json:"scan_type,omitempty"`     // 扫描方式
+	ModifiedDate        string  `json:"modified_date"`           // 最后修改时间
+	CreatedDate         string  `json:"created_date"`            // 创建时间
+	ClassName           string  `json:"class_name"`              // 分类
+	ApiGoodsId          string  `json:"api_goods_id"`            // 平台货品id
+	ApiSpecId           string  `json:"api_spec_id"`             // 平台规格id
+	PackScore           float64 `json:"pack_score,omitempty"`    // 打包积分
+	PickScore           float64 `json:"pick_score,omitempty"`    // 拣货积分
+	ScanScore           float64 `json:"scan_score,omitempty"`    // 验货积分
+	ApiBoodsName        string  `json:"api_goods_name"`          // 平台货品名称
 	PositionDetailsList []struct {
 		model.PositionDetail
 		ProductionDate string `json:"production_date"` // 生产日期

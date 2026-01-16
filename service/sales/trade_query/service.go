@@ -1,4 +1,4 @@
-package sales
+package trade_query
 
 import (
 	"context"
@@ -7,13 +7,17 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type tradeQuery struct {
+type Service struct {
 	config *core.Config
+}
+
+func NewService(config *core.Config) *Service {
+	return &Service{config}
 }
 
 // QueryWithDetail 获取ERP系统内订单信息
 // https://open.wangdian.cn/qjb/open/apidoc/doc?path=sales.TradeQuery.queryWithDetail
-func (s *tradeQuery) QueryWithDetail(ctx context.Context, req *TradeQueryReq, options ...core.ReqOptionFunc) (*TradeQueryResp, error) {
+func (s *Service) QueryWithDetail(ctx context.Context, req *QueryReq, options ...core.ReqOptionFunc) (*QueryResp, error) {
 	apiReq := req.apiReq
 	apiReq.HttpMethod = http.MethodPost
 	apiReq.Method = "sales.TradeQuery.queryWithDetail"
@@ -23,7 +27,7 @@ func (s *tradeQuery) QueryWithDetail(ctx context.Context, req *TradeQueryReq, op
 		return nil, err
 	}
 
-	resp := &TradeQueryResp{ApiResp: apiResp}
+	resp := &QueryResp{ApiResp: apiResp}
 	err = apiResp.UnmarshalBody(resp, s.config)
 	return resp, err
 }

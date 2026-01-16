@@ -1,4 +1,4 @@
-package strategy
+package virtual_warehouse
 
 import (
 	"fmt"
@@ -6,59 +6,59 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type VirtualWarehouseQueryReqBuilder struct {
+type QueryReqBuilder struct {
 	apiReq *core.ApiReq
 }
 
-func NewVirtualWarehouseQueryReqBuilder() *VirtualWarehouseQueryReqBuilder {
-	return &VirtualWarehouseQueryReqBuilder{core.NewApiReq()}
+func NewQueryReqBuilder() *QueryReqBuilder {
+	return &QueryReqBuilder{core.NewApiReq()}
 }
 
-func (builder *VirtualWarehouseQueryReqBuilder) PageSize(pageSize int) *VirtualWarehouseQueryReqBuilder {
+func (builder *QueryReqBuilder) PageSize(pageSize int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
 	return builder
 }
 
-func (builder *VirtualWarehouseQueryReqBuilder) PageNo(pageNo int) *VirtualWarehouseQueryReqBuilder {
+func (builder *QueryReqBuilder) PageNo(pageNo int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
 	return builder
 }
 
-func (builder *VirtualWarehouseQueryReqBuilder) CalcTotal(calcTotal int) *VirtualWarehouseQueryReqBuilder {
+func (builder *QueryReqBuilder) CalcTotal(calcTotal int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
 	return builder
 }
 
-func (builder *VirtualWarehouseQueryReqBuilder) Body(body *VirtualWarehouseQueryBody) *VirtualWarehouseQueryReqBuilder {
+func (builder *QueryReqBuilder) Body(body *QueryBody) *QueryReqBuilder {
 	builder.apiReq.Body = body
 	return builder
 }
 
-func (builder *VirtualWarehouseQueryReqBuilder) Build() *VirtualWarehouseQueryReq {
-	return &VirtualWarehouseQueryReq{builder.apiReq}
+func (builder *QueryReqBuilder) Build() *QueryReq {
+	return &QueryReq{builder.apiReq}
 }
 
-type VirtualWarehouseQueryReq struct {
+type QueryReq struct {
 	apiReq *core.ApiReq
 }
 
-type VirtualWarehouseQueryBody struct {
+type QueryBody struct {
 	VirtualWarehouseNo string `json:"virtual_warehouse_no,omitempty"` // 虚拟仓编号
 	SysWarehouseNo     string `json:"sys_warehouse_no,omitempty"`     // 实体仓编号
 }
 
-type VirtualWarehouseQueryResp struct {
+type QueryResp struct {
 	*core.ApiResp
 	core.CodeError
-	Data VirtualWarehouseQueryData `json:"data"`
+	Data QueryData `json:"data"`
 }
 
-type VirtualWarehouseQueryData struct {
-	DetailList []*VirtualWarehouseQueryDetail `json:"detail_list"` // 数据
-	TotalCount int64                          `json:"total_count"` // 总数
+type QueryData struct {
+	DetailList []*Detail `json:"detail_list"` // 数据
+	TotalCount int64     `json:"total_count"` // 总数
 }
 
-type VirtualWarehouseQueryDetail struct {
+type Detail struct {
 	VirtualWarehouseId int    `json:"virtual_warehouse_id"` // 虚拟仓id
 	VirtualWarehouseNo string `json:"virtual_warehouse_no"` // 虚拟仓编号 (唯一)
 	Name               string `json:"name"`                 // 虚拟仓名称
@@ -74,43 +74,43 @@ type VirtualWarehouseQueryDetail struct {
 	} `json:"shop_list" gorm:"serializer:json"` // 店铺列表
 }
 
-type VirtualWarehouseOrderSearchReqBuilder struct {
+type OrderSearchReqBuilder struct {
 	apiReq *core.ApiReq
 }
 
-func NewVirtualWarehouseOrderSearchReqBuilder() *VirtualWarehouseOrderSearchReqBuilder {
-	return &VirtualWarehouseOrderSearchReqBuilder{core.NewApiReq()}
+func NewOrderSearchReqBuilder() *OrderSearchReqBuilder {
+	return &OrderSearchReqBuilder{core.NewApiReq()}
 }
 
-func (builder *VirtualWarehouseOrderSearchReqBuilder) PageSize(pageSize int) *VirtualWarehouseOrderSearchReqBuilder {
+func (builder *OrderSearchReqBuilder) PageSize(pageSize int) *OrderSearchReqBuilder {
 	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
 	return builder
 }
 
-func (builder *VirtualWarehouseOrderSearchReqBuilder) PageNo(pageNo int) *VirtualWarehouseOrderSearchReqBuilder {
+func (builder *OrderSearchReqBuilder) PageNo(pageNo int) *OrderSearchReqBuilder {
 	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
 	return builder
 }
 
-func (builder *VirtualWarehouseOrderSearchReqBuilder) CalcTotal(calcTotal int) *VirtualWarehouseOrderSearchReqBuilder {
+func (builder *OrderSearchReqBuilder) CalcTotal(calcTotal int) *OrderSearchReqBuilder {
 	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
 	return builder
 }
 
-func (builder *VirtualWarehouseOrderSearchReqBuilder) Body(body *VirtualWarehouseOrderSearchBody) *VirtualWarehouseOrderSearchReqBuilder {
+func (builder *OrderSearchReqBuilder) Body(body *OrderSearchBody) *OrderSearchReqBuilder {
 	builder.apiReq.Body = body
 	return builder
 }
 
-func (builder *VirtualWarehouseOrderSearchReqBuilder) Build() *VirtualWarehouseOrderSearchReq {
-	return &VirtualWarehouseOrderSearchReq{builder.apiReq}
+func (builder *OrderSearchReqBuilder) Build() *OrderSearchReq {
+	return &OrderSearchReq{builder.apiReq}
 }
 
-type VirtualWarehouseOrderSearchReq struct {
+type OrderSearchReq struct {
 	apiReq *core.ApiReq
 }
 
-type VirtualWarehouseOrderSearchBody struct {
+type OrderSearchBody struct {
 	StartTime          string `json:"start_time"`                     // 开始时间
 	EndTime            string `json:"end_time"`                       // 结束时间
 	VirtualWarehouseNo string `json:"virtual_warehouse_no,omitempty"` // 虚拟仓编号
@@ -118,18 +118,18 @@ type VirtualWarehouseOrderSearchBody struct {
 	OrderType          int    `json:"order_type,omitempty"`           // 单据类型
 }
 
-type VirtualWarehouseOrderSearchResp struct {
+type OrderSearchResp struct {
 	*core.ApiResp
 	core.CodeError
-	Data VirtualWarehouseOrderSearchData `json:"data"`
+	Data OrderSearchData `json:"data"`
 }
 
-type VirtualWarehouseOrderSearchData struct {
-	Order      []*VirtualWarehouseOrderSearchOrder `json:"order"`
-	TotalCount int64                               `json:"total_count"`
+type OrderSearchData struct {
+	Order      []*Order `json:"order"`
+	TotalCount int64    `json:"total_count"`
 }
 
-type VirtualWarehouseOrderSearchOrder struct {
+type Order struct {
 	OrderId              int     `json:"order_id"`                 // 单据id
 	OrderNo              string  `json:"order_no"`                 // 单据编号 (唯一)
 	OrderType            int     `json:"order_type"`               // 单据类型

@@ -1,16 +1,16 @@
-package refund
+package goods
 
 import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
-	"github.com/go-marvis/wangdian-sdk-go/service/aftersales/refund/refund"
+	"github.com/go-marvis/wangdian-sdk-go/service/goods/goods"
 )
 
 type Service struct {
-	Refund *refund.Service
+	Goods *goods.Service
 }
 
 func NewService(config *core.Config) *Service {
 	return &Service{
-		Refund: refund.NewService(config),
+		Goods: goods.NewService(config),
 	}
 }

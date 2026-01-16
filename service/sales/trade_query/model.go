@@ -1,4 +1,4 @@
-package sales
+package trade_query
 
 import (
 	"fmt"
@@ -6,43 +6,43 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/core"
 )
 
-type TradeQueryReqBuilder struct {
+type QueryReqBuilder struct {
 	apiReq *core.ApiReq
 }
 
-func NewTradeQueryReqBuilder() *TradeQueryReqBuilder {
-	return &TradeQueryReqBuilder{core.NewApiReq()}
+func NewQueryReqBuilder() *QueryReqBuilder {
+	return &QueryReqBuilder{core.NewApiReq()}
 }
 
-func (builder *TradeQueryReqBuilder) PageSize(pageSize int) *TradeQueryReqBuilder {
+func (builder *QueryReqBuilder) PageSize(pageSize int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
 	return builder
 }
 
-func (builder *TradeQueryReqBuilder) PageNo(pageNo int) *TradeQueryReqBuilder {
+func (builder *QueryReqBuilder) PageNo(pageNo int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
 	return builder
 }
 
-func (builder *TradeQueryReqBuilder) CalcTotal(calcTotal int) *TradeQueryReqBuilder {
+func (builder *QueryReqBuilder) CalcTotal(calcTotal int) *QueryReqBuilder {
 	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
 	return builder
 }
 
-func (builder *TradeQueryReqBuilder) Body(body *TradeQueryBody) *TradeQueryReqBuilder {
+func (builder *QueryReqBuilder) Body(body *QueryBody) *QueryReqBuilder {
 	builder.apiReq.Body = body
 	return builder
 }
 
-func (builder TradeQueryReqBuilder) Build() *TradeQueryReq {
-	return &TradeQueryReq{builder.apiReq}
+func (builder QueryReqBuilder) Build() *QueryReq {
+	return &QueryReq{builder.apiReq}
 }
 
-type TradeQueryReq struct {
+type QueryReq struct {
 	apiReq *core.ApiReq
 }
 
-type TradeQueryBody struct {
+type QueryBody struct {
 	StartTime          string `json:"start_time"`                      //开始时间
 	EndTime            string `json:"end_time"`                        //结束时间
 	WarehouseNo        string `json:"warehouse_no,omitempty"`          //仓库编号
@@ -61,18 +61,18 @@ type TradeQueryBody struct {
 	CutLogisticsNo     bool   `json:"cut_logistics_no,omitempty"`      //是否截取物流单号
 }
 
-type TradeQueryResp struct {
+type QueryResp struct {
 	*core.ApiResp
 	core.CodeError
-	Data *TradeQueryData `json:"data"`
+	Data *QueryData `json:"data"`
 }
 
-type TradeQueryData struct {
-	Order      []*TradeQueryOrder `json:"order"`
-	TotalCount int64              `json:"total_count"`
+type QueryData struct {
+	Order      []*Order `json:"order"`
+	TotalCount int64    `json:"total_count"`
 }
 
-type TradeQueryOrder struct {
+type Order struct {
 	TradeId             int64   `json:"trade_id"`              // 订单唯一键
 	TradeNo             string  `json:"trade_no"`              // 订单编号
 	PlatformId          int     `json:"platform_id"`           // 平台ID

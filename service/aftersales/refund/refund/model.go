@@ -7,43 +7,43 @@ import (
 	"github.com/go-marvis/wangdian-sdk-go/service/model"
 )
 
-type RefundSearchReqBuilder struct {
+type SearchReqBuilder struct {
 	apiReq *core.ApiReq
 }
 
-func NewRefundSearchReqBuilder() *RefundSearchReqBuilder {
-	return &RefundSearchReqBuilder{core.NewApiReq()}
+func NewSearchReqBuilder() *SearchReqBuilder {
+	return &SearchReqBuilder{core.NewApiReq()}
 }
 
-func (builder *RefundSearchReqBuilder) PageSize(pageSize int) *RefundSearchReqBuilder {
+func (builder *SearchReqBuilder) PageSize(pageSize int) *SearchReqBuilder {
 	builder.apiReq.QueryParams.Set("page_size", fmt.Sprint(pageSize))
 	return builder
 }
 
-func (builder *RefundSearchReqBuilder) PageNo(pageNo int) *RefundSearchReqBuilder {
+func (builder *SearchReqBuilder) PageNo(pageNo int) *SearchReqBuilder {
 	builder.apiReq.QueryParams.Set("page_no", fmt.Sprint(pageNo))
 	return builder
 }
 
-func (builder *RefundSearchReqBuilder) CalcTotal(calcTotal int) *RefundSearchReqBuilder {
+func (builder *SearchReqBuilder) CalcTotal(calcTotal int) *SearchReqBuilder {
 	builder.apiReq.QueryParams.Set("calc_total", fmt.Sprint(calcTotal))
 	return builder
 }
 
-func (builder *RefundSearchReqBuilder) Body(body *RefundSearchReqBody) *RefundSearchReqBuilder {
+func (builder *SearchReqBuilder) Body(body *SearchReqBody) *SearchReqBuilder {
 	builder.apiReq.Body = body
 	return builder
 }
 
-func (builder *RefundSearchReqBuilder) Build() *RefundSearchReq {
-	return &RefundSearchReq{builder.apiReq}
+func (builder *SearchReqBuilder) Build() *SearchReq {
+	return &SearchReq{builder.apiReq}
 }
 
-type RefundSearchReq struct {
+type SearchReq struct {
 	apiReq *core.ApiReq
 }
 
-type RefundSearchReqBody struct {
+type SearchReqBody struct {
 	ShopNos                   string `json:"shop_nos,omitempty"`                     // 店铺编号
 	Tid                       string `json:"tid,omitempty"`                          // 原始单号
 	BuyerNick                 string `json:"buyer_nick,omitempty"`                   // 客户网名
@@ -71,17 +71,17 @@ type RefundSearchReqBody struct {
 	RawRefundNos              string `json:"raw_refund_nos,omitempty"`               // 原始退款单号
 }
 
-type RefundSearchResp struct {
+type SearchResp struct {
 	*core.ApiResp
 	core.CodeError
-	Data *RefundSearchData `json:"data"`
+	Data *SearchData `json:"data"`
 }
-type RefundSearchData struct {
-	Order      []*RefundSearchOrder `json:"order"`
-	TotalCount int64                `json:"total_count"`
+type SearchData struct {
+	Order      []*Order `json:"order"`
+	TotalCount int64    `json:"total_count"`
 }
 
-type RefundSearchOrder struct {
+type Order struct {
 	RefundId              int     `json:"refund_id"`               // 退换单id
 	SrcTids               string  `json:"src_tids"`                // 原始单号
 	RefundNo              string  `json:"refund_no"`               // 退换单号(唯一)

@@ -1,13 +1,16 @@
 package strategy
 
-import "github.com/go-marvis/wangdian-sdk-go/core"
+import (
+	"github.com/go-marvis/wangdian-sdk-go/core"
+	"github.com/go-marvis/wangdian-sdk-go/service/setting/strategy/virtual_warehouse"
+)
 
 type Service struct {
-	VirtualWarehouse *virtualWarehouse
+	VirtualWarehouse *virtual_warehouse.Service
 }
 
 func NewService(config *core.Config) *Service {
 	return &Service{
-		VirtualWarehouse: &virtualWarehouse{config},
+		VirtualWarehouse: virtual_warehouse.NewService(config),
 	}
 }
