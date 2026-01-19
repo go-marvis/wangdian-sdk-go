@@ -7,6 +7,7 @@ type PositionDetail struct {
 	PositionId         int     `json:"position_id,omitempty"` // 货位id
 	PositionNo         string  `json:"position_no,omitempty"` // 货位编号
 	ExpireDate         string  `json:"expire_date"`           // 有效期
+	ProductionDate     string  `json:"production_date"`       // 生产日期
 	BatchNo            string  `json:"batch_no"`              // 批次号
 	PositionGoodsCount float64 `json:"position_goods_count"`  // 当前货位出库总货品数量
 }

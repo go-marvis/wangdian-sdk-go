@@ -266,11 +266,10 @@ type OrderDetail struct {
 	ApiBoodsName        string  `json:"api_goods_name"`          // 平台货品名称
 	PositionDetailsList []struct {
 		model.PositionDetail
-		ProductionDate string `json:"production_date"` // 生产日期
+		BatchRemark string `json:"batch_remark,omitempty"` // 批次备注
 	} `json:"position_details_list,omitempty"` //出库货位明细
 	PickPositionDetailsList []struct {
 		model.PositionDetail
-		ProductionDate string `json:"production_date"` // 生产日期
-		SpecNo         string `json:"spec_no"`         // 商家编码
+		SpecNo string `json:"spec_no,omitempty"` // 商家编码
 	} `json:"pick_position_details_list,omitempty"` // 	拣货位明细
 }
