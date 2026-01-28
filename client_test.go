@@ -124,8 +124,8 @@ func Test_wms_outer_in_order(t *testing.T) {
 	resp, err := api.Wms.Outer.OuterIn.QueryWithDetail(ctx, outer_in.NewQueryReqBuilder().
 		PageNo(0).PageSize(1).CalcTotal(1).
 		Body(&outer_in.QueryBody{
-			StartTime: "2025-01-17",
-			EndTime:   "2025-01-18",
+			StartTime: "2025-01-01",
+			EndTime:   "2025-01-30",
 		}).Build())
 	assert.Nil(t, err)
 	t.Log(resp.Data.TotalCount)
@@ -136,8 +136,8 @@ func Test_wms_outer_out_order(t *testing.T) {
 	resp, err := api.Wms.Outer.OuterOut.QueryWithDetail(ctx, outer_out.NewQueryReqBuilder().
 		PageNo(0).PageSize(1).CalcTotal(1).
 		Body(&outer_out.QueryBody{
-			StartTime: "2025-01-17",
-			EndTime:   "2025-01-18",
+			StartTime: "2025-01-01",
+			EndTime:   "2025-01-30",
 		}).Build())
 	assert.Nil(t, err)
 	t.Log(resp.Data.TotalCount)

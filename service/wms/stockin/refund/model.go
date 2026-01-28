@@ -96,7 +96,7 @@ type Order struct {
 	LogisticsType        int                     `json:"logistics_type"`                          // 物流方式
 	LogisticsName        string                  `json:"logistics_name"`                          // 物流公司
 	LogisticsNo          string                  `json:"logistics_no"`                            // 物流单号
-	LogisticsId          int                     `json:"logistics_id"`                            // 物流id
+	LogisticsId          int64                   `json:"logistics_id"`                            // 物流id
 	CheckTime            int64                   `json:"check_time"`                              // 审核时间
 	RefundNo             string                  `json:"refund_no"`                               // 退换单号
 	GoodsCount           float64                 `json:"goods_count"`                             // 货品数量
@@ -110,7 +110,7 @@ type Order struct {
 	FlagName             string                  `json:"flag_name"`                               // 标记名称
 	TradeNoList          string                  `json:"trade_no_list"`                           // 系统订单编号
 	TidList              string                  `json:"tid_list"`                                // 原始订单
-	SrcOrderId           int                     `json:"src_order_id"`                            // 退换单id
+	SrcOrderId           int64                   `json:"src_order_id"`                            // 退换单id
 	StockinId            int                     `json:"stockin_id"`                              // 入库单id
 	ShopPlatformId       int                     `json:"shop_platform_id"`                        // 店铺平台id
 	SubPlatformId        int                     `json:"sub_platform_id"`                         // 子平台id
@@ -147,8 +147,8 @@ type Order struct {
 
 // OrderDetail 入库单明细
 type OrderDetail struct {
-	RecId                 int     `json:"rec_id"`                       // 入库单明细id(主键)
-	StockinId             int     `json:"stockin_id"`                   // 入库单id
+	RecId                 int64   `json:"rec_id"`                       // 入库单明细id(主键)
+	StockinId             int64   `json:"stockin_id"`                   // 入库单id
 	RefundDetailId        string  `json:"refund_detail_id"`             // 退换单明细id
 	Num                   float64 `json:"num"`                          // 数量
 	TotalCost             float64 `json:"total_cost"`                   // 总成本
@@ -156,8 +156,8 @@ type OrderDetail struct {
 	RightNum              float64 `json:"right_num"`                    // 调整后数量
 	GoodsName             string  `json:"goods_name"`                   // 货品名称
 	GoodsNo               string  `json:"goods_no"`                     // 货品编码
-	GoodsId               int     `json:"goods_id"`                     // 货品id
-	SpecId                int     `json:"spec_id,omitempty"`            // 商品id
+	GoodsId               int64   `json:"goods_id"`                     // 货品id
+	SpecId                int64   `json:"spec_id,omitempty"`            // 商品id
 	SpecNo                string  `json:"spec_no"`                      // 商家编码
 	Defect                bool    `json:"defect,omitempty"`             // 是否残次品
 	Prop1                 string  `json:"prop1,omitempty"`              // 单品自定义属性1
@@ -174,8 +174,8 @@ type OrderDetail struct {
 	LogisticsName         string  `json:"logistics_name"`               // 物流名称
 	LogisticsNo           string  `json:"logistics_no"`                 // 物流单号
 	WarehouseId           int     `json:"warehouse_id"`                 // 仓库id
-	SrcOrderId            int     `json:"src_order_id"`                 // 退换单id
-	LogisticsId           int     `json:"logistics_id"`                 // 物流id
+	SrcOrderId            int64   `json:"src_order_id"`                 // 退换单id
+	LogisticsId           int64   `json:"logistics_id"`                 // 物流id
 	BaseUnitName          string  `json:"base_unit_name"`               // 单位
 	BatchNo               string  `json:"batch_no"`                     // 批次号
 	ExpireDate            string  `json:"expire_date"`                  // 有效期
@@ -188,9 +188,9 @@ type OrderDetail struct {
 	SnList                string  `json:"sn_list,omitempty"`            // sn序列号信息
 	UnitId                int     `json:"unit_id"`                      // 入库单位id
 	BaseUnitId            int     `json:"base_unit_id"`                 // 基本单位id
-	OrgStockinDetailId    int     `json:"org_stockin_detail_id"`        // 库存明细id
+	OrgStockinDetailId    int64   `json:"org_stockin_detail_id"`        // 库存明细id
 	BatchId               int     `json:"batch_id"`                     // 批次id
-	PositionId            int     `json:"position_id"`                  // 货位id
+	PositionId            int64   `json:"position_id"`                  // 货位id
 	ValidityDays          int     `json:"validity_days"`                // 有效期天数
 	Num2                  float64 `json:"num2"`                         // 辅助数量
 	AdjustNum             float64 `json:"adjust_num"`                   // 调整数量
@@ -204,8 +204,8 @@ type OrderDetail struct {
 	ActualRefundAmount    string  `json:"actual_refund_amount"`         // 退款金额
 	OriginalPrice         string  `json:"original_price"`               // 原价
 	RefundOrderDetailList []struct {
-		RefundOrderId         int     `json:"refund_order_id"`          // 退换单明细id
-		StockinOrderDetailId  int     `json:"stockin_order_detail_id"`  // 入库单明细id
+		RefundOrderId         int64   `json:"refund_order_id"`          // 退换单明细id
+		StockinOrderDetailId  int64   `json:"stockin_order_detail_id"`  // 入库单明细id
 		Price                 float64 `json:"price"`                    // 价格
 		SpecNo                string  `json:"spec_no"`                  // 商家编码
 		StockinNum            float64 `json:"stockin_num"`              // 实际入库数量

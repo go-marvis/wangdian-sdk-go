@@ -130,7 +130,7 @@ type OrderSearchData struct {
 }
 
 type Order struct {
-	OrderId              int     `json:"order_id"`                 // 单据id
+	OrderId              int64   `json:"order_id"`                 // 单据id
 	OrderNo              string  `json:"order_no"`                 // 单据编号 (唯一)
 	OrderType            int     `json:"order_type"`               // 单据类型
 	VirtualWarehouseNo   string  `json:"virtual_warehouse_no"`     // 虚拟仓仓库编号
@@ -151,8 +151,8 @@ type Order struct {
 	Modified             string  `json:"modified"`                 // 最后修改时间
 	Created              string  `json:"created"`                  // 创建时间
 	DetailList           []struct {
-		RecId         int     `json:"rec_id"`                 // 明细唯一id
-		OrderId       int     `json:"order_id"`               // 虚拟仓单据id
+		RecId         int64   `json:"rec_id"`                 // 明细唯一id
+		OrderId       int64   `json:"order_id"`               // 虚拟仓单据id
 		SpecNo        string  `json:"spec_no"`                // 商家编码
 		SpecCode      string  `json:"spec_code,omitempty"`    // 规格编码
 		GoodsNo       string  `json:"goods_no"`               // 货品编号

@@ -53,7 +53,7 @@ type QueryStockPdInDetailBody struct {
 }
 
 type StockPdDetail struct {
-	RecId      int     `json:"rec_id"`                // 明细id
+	RecId      int64   `json:"rec_id"`                // 明细id
 	GoodsCount float64 `json:"goods_count"`           // 数量
 	GoodsName  string  `json:"goods_name"`            // 货品名称
 	GoodsNo    string  `json:"goods_no"`              // 货品编号
@@ -81,7 +81,7 @@ type QueryStockPdInDetailData struct {
 }
 
 type StockPdInOrder struct {
-	StockinId     int               `json:"stockin_id"`                         // 入库单ID
+	StockinId     int64             `json:"stockin_id"`                         // 入库单ID
 	OrderNo       string            `json:"order_no"`                           // 入库单号
 	WarehouseNo   string            `json:"warehouse_no"`                       // 仓库编号
 	WarehouseName string            `json:"warehouse_name"`                     // 仓库名称
@@ -100,7 +100,7 @@ type StockPdInOrder struct {
 
 type StockPdInDetail struct {
 	StockPdDetail
-	StockinId      int     `json:"stockin_id"`                // 入库单ID
+	StockinId      int64   `json:"stockin_id"`                // 入库单ID
 	TotalCost      float64 `json:"total_cost,omitempty"`      // 成本价
 	RightNum       float64 `json:"right_num"`                 // 调整后数量
 	GoodsUnit      string  `json:"goods_unit"`                // 单位
@@ -166,9 +166,9 @@ type QueryStockPdOutDetailData struct {
 }
 
 type StockPdOutOrder struct {
-	StockoutId       int                `json:"stockout_id"`                        // 出库单ID
+	StockoutId       int64              `json:"stockout_id"`                        // 出库单ID
 	OrderNo          string             `json:"order_no"`                           // 出库单号
-	SrcOrderId       int                `json:"src_order_id"`                       // 源单号
+	SrcOrderId       int64              `json:"src_order_id"`                       // 源单号
 	WarehouseNo      string             `json:"warehouse_no"`                       // 仓库编号
 	ConsignTime      int64              `json:"consign_time"`                       // 出库时间
 	OrderType        int                `json:"order_type"`                         // 出库类型
@@ -193,7 +193,7 @@ type StockPdOutOrder struct {
 
 type StockPdOutDetail struct {
 	StockPdDetail
-	StockoutId int     `json:"stockout_id"`          // 出库单ID
+	StockoutId int64   `json:"stockout_id"`          // 出库单ID
 	CostPrice  float64 `json:"cost_price,omitempty"` // 成本价
 	Weight     float64 `json:"weight,omitempty"`     // 总重量
 	GoodsType  int     `json:"goods_type,omitempty"` // 货品类型

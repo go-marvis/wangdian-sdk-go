@@ -67,7 +67,7 @@ type QueryData struct {
 }
 
 type Order struct {
-	StockoutId            int     `json:"stockout_id"`              // 出库单id
+	StockoutId            int64   `json:"stockout_id"`              // 出库单id
 	OrderNo               string  `json:"order_no"`                 // 出库单编号
 	SrcOrderNo            string  `json:"src_order_no"`             // 业务单号
 	WarehouseNo           string  `json:"warehouse_no"`             // 出库的仓库编号
@@ -94,8 +94,8 @@ type Order struct {
 	LogisticsCompanyNo    string  `json:"logistics_company_no"`     // 物流公司编号
 	WarehouseName         string  `json:"warehouse_name"`           // 仓库名称
 	DetailList            []struct {
-		RecId               int                    `json:"rec_id"`                 // 出库单详情id
-		StockoutId          int                    `json:"stockout_id"`            // 出库单id
+		RecId               int64                  `json:"rec_id"`                 // 出库单详情id
+		StockoutId          int64                  `json:"stockout_id"`            // 出库单id
 		GoodsCount          float64                `json:"goods_count"`            // 货品数量
 		TotalAmount         float64                `json:"total_amount,omitempty"` // 总成本
 		ExpireAate          string                 `json:"expire_date"`            // 有效期
@@ -114,7 +114,7 @@ type Order struct {
 		UnitName            string                 `json:"unit_name,omitempty"`    // 单位
 		BaseUnitId          int                    `json:"base_unit_id"`           // 单位id
 		BatchNo             string                 `json:"batch_no"`               // 批次号
-		PositionId          int                    `json:"position_id,omitempty"`  // 货位id
+		PositionId          int64                  `json:"position_id,omitempty"`  // 货位id
 		PositionNo          string                 `json:"position_no,omitempty"`  // 货位编号
 		PositionDetailsList []model.PositionDetail `json:"position_details_list"`  // 货位明细
 	} `json:"detail_list"  gorm:"serializer:json"` // 出库单明细

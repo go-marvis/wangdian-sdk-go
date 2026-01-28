@@ -75,7 +75,7 @@ type QueryData struct {
 }
 
 type Order struct {
-	StockoutId           int                     `json:"stockout_id"`            // 出库单ID
+	StockoutId           int64                   `json:"stockout_id"`            // 出库单ID
 	OrderNo              string                  `json:"order_no"`               // 出库单号
 	VirtualWarehouseNo   string                  `json:"virtual_warehouse_no"`   // 虚拟仓编号
 	VirtualWarehouseName string                  `json:"virtual_warehouse_name"` // 虚拟仓名称
@@ -104,7 +104,7 @@ type Order struct {
 	LogisticsName        string                  `json:"logistics_name"`         // 物流公司名称
 	ShopId               int                     `json:"shop_id"`                // 店铺id
 	WarehouseId          int                     `json:"warehouse_id"`           // 仓库id
-	LogisticsId          int                     `json:"logistics_id"`           // 物流id
+	LogisticsId          int64                   `json:"logistics_id"`           // 物流id
 	BadReason            int                     `json:"bad_reason"`             // 异常原因
 	ReceiverDtb          string                  `json:"receiver_dtb"`           // 大头笔
 	RefundStatus         int                     `json:"refund_status"`          // 退款状态
@@ -133,11 +133,11 @@ type Order struct {
 	ShopRemark           string                  `json:"shop_remark"`            // 店铺备注
 	Status               int                     `json:"status"`                 // 出库单状态
 	InvoiceType          int                     `json:"invoice_type"`           // 发票类型
-	InvoiceId            int                     `json:"invoice_id"`             // 发票ID
+	InvoiceId            int64                   `json:"invoice_id"`             // 发票ID
 	CodAmount            string                  `json:"cod_amount"`             // 货到付款金额
 	DeliveryTerm         int                     `json:"delivery_term"`          // 发货条件
 	PlatformId           int                     `json:"platform_id"`            // 平台ID
-	TradeId              int                     `json:"trade_id"`               // 订单ID
+	TradeId              int64                   `json:"trade_id"`               // 订单ID
 	EmployeeNo           string                  `json:"employee_no"`            // 审核员编号
 	Discount             string                  `json:"discount"`               // 优惠金额
 	Tax                  string                  `json:"tax"`                    // 税额
@@ -193,10 +193,10 @@ type Order struct {
 }
 
 type OrderDetail struct {
-	RecId               int     `json:"rec_id"`                  // 销售出库单详情的id
-	StockoutId          int     `json:"stockout_id"`             // 出库单id
-	SrcOrderDetailId    int     `json:"src_order_detail_id"`     // 订单明细id
-	SpecId              int     `json:"spec_id"`                 // 单品id
+	RecId               int64   `json:"rec_id"`                  // 销售出库单详情的id
+	StockoutId          int64   `json:"stockout_id"`             // 出库单id
+	SrcOrderDetailId    int64   `json:"src_order_detail_id"`     // 订单明细id
+	SpecId              int64   `json:"spec_id"`                 // 单品id
 	SpecNo              string  `json:"spec_no"`                 // 商家编码
 	GoodsCount          float64 `json:"goods_count"`             // 货品数量
 	TotalAmount         float64 `json:"total_amount,omitempty"`  // 总成本
@@ -208,7 +208,7 @@ type OrderDetail struct {
 	SpecCode            string  `json:"spec_code,omitempty"`     // 规格码
 	CostPrice           float64 `json:"cost_price,omitempty"`    // 货品成本
 	Weight              float64 `json:"weight,omitempty"`        // 总重量
-	GoodsId             int     `json:"goods_id"`                // 货品id
+	GoodsId             int64   `json:"goods_id"`                // 货品id
 	Prop1               string  `json:"prop1,omitempty"`         // 规格自定义属性1
 	Prop2               string  `json:"prop2,omitempty"`         // 规格自定义属性2
 	Prop3               string  `json:"prop3,omitempty"`         // 规格自定义属性3
@@ -224,7 +224,7 @@ type OrderDetail struct {
 	TaxRate             float64 `json:"tax_rate,omitempty"`      // 税率
 	Barcode             string  `json:"barcode"`                 // 主条码
 	UnitName            string  `json:"unit_name,omitempty"`     // 基本单位名称
-	SaleOrderId         int     `json:"sale_order_id"`           // 订单货品(子订单)id
+	SaleOrderId         int64   `json:"sale_order_id"`           // 订单货品(子订单)id
 	GiftType            int     `json:"gift_type"`               // 是否是赠品
 	SrcOid              string  `json:"src_oid"`                 // 原始子订单号
 	SrcTid              string  `json:"src_tid"`                 // 子单原始订单号
@@ -250,7 +250,7 @@ type OrderDetail struct {
 	UnitRatio           float64 `json:"unit_ratio"`              // 单位换算
 	Num2                float64 `json:"num2"`                    // 辅助数量
 	Num                 float64 `json:"num"`                     // 货品数量
-	PositionId          int     `json:"position_id,omitempty"`   // 出库货位id
+	PositionId          int64   `json:"position_id,omitempty"`   // 出库货位id
 	BatchId             int     `json:"batch_id,omitempty"`      // 指定出库批次
 	IsExamined          int     `json:"is_examined,omitempty"`   // 是否验货
 	ExpireDate          int64   `json:"expire_date,omitempty"`   // 有效期

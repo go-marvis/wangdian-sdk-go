@@ -82,7 +82,7 @@ type SearchData struct {
 }
 
 type Order struct {
-	RefundId              int     `json:"refund_id"`               // 退换单id
+	RefundId              int64   `json:"refund_id"`               // 退换单id
 	SrcTids               string  `json:"src_tids"`                // 原始单号
 	RefundNo              string  `json:"refund_no"`               // 退换单号(唯一)
 	Remark                string  `json:"remark"`                  // 备注
@@ -117,7 +117,7 @@ type Order struct {
 	FenxiaoNickName       string  `json:"fenxiao_nick_name"`       // 分销商昵称
 	Status                int     `json:"status"`                  // 退换单状态
 	ShopId                int     `json:"shop_id"`                 // 店铺id
-	TradeId               int     `json:"trade_id"`                // 订单id
+	TradeId               int64   `json:"trade_id"`                // 订单id
 	RawRefundNos          string  `json:"raw_refund_nos"`          // 原始退换单号
 	PayId                 string  `json:"pay_id"`                  // 支付订单号
 	ProviderRefundNo      string  `json:"provider_refund_no"`      // 分销退换单号
@@ -143,10 +143,10 @@ type Order struct {
 	RrStatus              int     `json:"rr_status"`               // 平台状态
 	CurrentPhaseTimeout   string  `json:"current_phase_timeout"`   // 退款成功时间
 	DetailList            []struct {
-		RecId            int     `json:"rec_id"`                       // 退换单明细Id
-		RefundId         int     `json:"refund_id"`                    // 退换单id
+		RecId            int64   `json:"rec_id"`                       // 退换单明细Id
+		RefundId         int64   `json:"refund_id"`                    // 退换单id
 		Od               string  `json:"oid"`                          // 原始子单号
-		TradeOrderId     int     `json:"trade_order_id"`               // 订单明细id
+		TradeOrderId     int64   `json:"trade_order_id"`               // 订单明细id
 		PlatformId       int     `json:"platform_id"`                  // 平台id
 		Tid              string  `json:"tid"`                          // 原始单号
 		TradeNo          string  `json:"trade_no"`                     // 系统订单编号
@@ -164,8 +164,8 @@ type Order struct {
 		SpecNo           string  `json:"spec_no"`                      // 商家编码
 		GoodsId          string  `json:"goods_id,omitempty"`           // 平台货品id
 		SpecId           string  `json:"spec_id,omitempty"`            // 平台规格id
-		SysGoodsId       int     `json:"sys_goods_id"`                 // 系统货品id
-		SysSpecId        int     `json:"sys_spec_id"`                  // 系统规格id
+		SysGoodsId       int64   `json:"sys_goods_id"`                 // 系统货品id
+		SysSpecId        int64   `json:"sys_spec_id"`                  // 系统规格id
 		SpecCode         string  `json:"spec_code,omitempty"`          // 规格码
 		Barcode          string  `json:"barcode"`                      // 条码
 		StockinNum       float64 `json:"stockin_num"`                  // 入库数量
@@ -177,7 +177,7 @@ type Order struct {
 		SuiteName        string  `json:"suite_name,omitempty"`         // 组合装名称
 		RawRefundNos     string  `json:"raw_refund_nos,omitempty"`     // 原始退款单号
 		RawRefundNo      string  `json:"raw_refund_no,omitempty"`      // 原始退款单号
-		SalesTradeId     int     `json:"sales_trade_id,omitempty"`     // 订单id
+		SalesTradeId     int64   `json:"sales_trade_id,omitempty"`     // 订单id
 		Discount         float64 `json:"discount,omitempty"`           // 总折扣金额
 		Paid             float64 `json:"paid,omitempty"`               // 已支付金额
 		SuiteId          int     `json:"suite_id,omitempty"`           // 组合装id
@@ -187,8 +187,8 @@ type Order struct {
 		GiftType         int     `json:"gift_type"`                    // 赠品类型
 	} `json:"detail_list" gorm:"serializer:json"` // 退换单详情
 	AmountDetailList []struct {
-		RecId         int     `json:"rec_id"`                  // 金额明细记录id
-		RefundId      int     `json:"refund_id"`               // 退换单id
+		RecId         int64   `json:"rec_id"`                  // 金额明细记录id
+		RefundId      int64   `json:"refund_id"`               // 退换单id
 		RefundType    int     `json:"refund_type"`             // 退换类型
 		IsReturn      int     `json:"is_return"`               // 金额流向
 		RefundAmount  float64 `json:"refund_amount,omitempty"` // 退款金额
@@ -218,7 +218,7 @@ type Order struct {
 		SwapOrderDetailList []struct {
 			Oid         string  `json:"oid"`          // 原始子单号
 			TargetType  int     `json:"target_type"`  // 货品类型
-			TargetId    int     `json:"target_id"`    // 换出货品id
+			TargetId    int64   `json:"target_id"`    // 换出货品id
 			Defect      bool    `json:"defect"`       // 是否残次品
 			GoodsName   string  `json:"goods_name"`   // 货品名称
 			GoodsNo     string  `json:"goods_no"`     // 货品编号
