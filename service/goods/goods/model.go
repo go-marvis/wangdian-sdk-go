@@ -64,7 +64,7 @@ type QueryData struct {
 }
 
 type Goods struct {
-	GoodsId       int          `json:"goods_id"`                         // 货品id
+	GoodsId       int64        `json:"goods_id"`                         // 货品id
 	GoodsNo       string       `json:"goods_no"`                         // 货品编号
 	GoodsName     string       `json:"goods_name"`                       // 货品名称
 	ShortName     string       `json:"short_name"`                       // 货品简称
@@ -99,8 +99,8 @@ type Goods struct {
 }
 
 type GoodsSpec struct {
-	GoodsId          int     `json:"goods_id"`                      // 货品id
-	SpecId           int     `json:"spec_id"`                       // 单品id
+	GoodsId          int64   `json:"goods_id"`                      // 货品id
+	SpecId           int64   `json:"spec_id"`                       // 单品id
 	SpecNo           string  `json:"spec_no"`                       // 商家编码
 	SpecCode         string  `json:"spec_code,omitempty"`           // 规格码
 	Barcode          string  `json:"barcode"`                       // 主条码

@@ -64,7 +64,7 @@ type QueryData struct {
 }
 
 type Order struct {
-	RecId          int     `json:"rec_id"`           // 调整出库单id
+	RecId          int64   `json:"rec_id"`           // 调整出库单id
 	OuterOutNo     string  `json:"outer_out_no"`     // 出库单号 (唯一)
 	WarehouseName  string  `json:"warehouse_name"`   // 仓库名称
 	WarehouseNo    string  `json:"warehouse_no"`     // 仓库编号
@@ -81,7 +81,7 @@ type Order struct {
 	Created        string  `json:"created"`          // 创建时间
 	Modified       string  `json:"modified"`         // 最后修改时间
 	DetailList     []struct {
-		RecId        int     `json:"rec_id"`              // 调整出库单明细id
+		RecId        int64   `json:"rec_id"`              // 调整出库单明细id
 		SpecNo       string  `json:"spec_no"`             // 商家编码
 		GoodsNo      string  `json:"goods_no"`            // 货品编码
 		GoodsName    string  `json:"goods_name"`          // 货品名称

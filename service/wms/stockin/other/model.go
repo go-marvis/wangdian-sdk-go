@@ -65,7 +65,7 @@ type QueryData struct {
 }
 
 type Order struct {
-	StockinId          int     `json:"stockin_id"`                     // 入库单ID
+	StockinId          int64   `json:"stockin_id"`                     // 入库单ID
 	OrderNo            string  `json:"order_no"`                       // 入库单号
 	Status             int     `json:"status"`                         // 状态
 	WarehouseNo        string  `json:"warehouse_no"`                   // 仓库编号
@@ -84,14 +84,14 @@ type Order struct {
 	LogisticsCompanyNo string  `json:"logistics_company_no,omitempty"` // 物流公司编号
 	WmsStockChangeNo   string  `json:"wms_stock_change_no,omitempty"`  // wms借调单号
 	DetailList         []struct {
-		StockinId        int     `json:"stockin_id"`            // 入库单ID
+		RecId            int64   `json:"rec_id"`                // 明细id
+		StockinId        int64   `json:"stockin_id"`            // 入库单ID
 		GoodsCount       float64 `json:"goods_count"`           // 数量
 		TotalCost        float64 `json:"total_cost"`            // 总成本
 		Remark           string  `json:"remark,omitempty"`      // 备注
 		RightNum         float64 `json:"right_num"`             // 调整后数量
 		GoodsUnit        string  `json:"goods_unit"`            // 单位
 		BatchNo          string  `json:"batch_no"`              // 批次号
-		RecId            int     `json:"rec_id"`                // 明细id
 		ProductionDate   string  `json:"production_date"`       // 生产日期
 		ExpireDate       string  `json:"expire_date"`           // 有效期
 		GoodsName        string  `json:"goods_name"`            // 货品名称

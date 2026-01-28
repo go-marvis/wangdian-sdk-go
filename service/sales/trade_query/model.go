@@ -172,7 +172,7 @@ type Order struct {
 	OtherCost           float64 `json:"other_cost"`            // 其他成本
 	IsSealed            bool    `json:"is_sealed"`             // 不可合并拆分
 	CustomerType        int     `json:"customer_type"`         // 客户类型
-	LogisticsId         int     `json:"logistics_id"`          // 物流公司id
+	LogisticsId         int64   `json:"logistics_id"`          // 物流公司id
 	CancelReason        string  `json:"cancel_reason"`         // 取消原因
 	RevertReason        string  `json:"revert_reason"`         // 驳回原因
 	NewTradeLabel       string  `json:"new_trade_label"`       // 订单标签mask
@@ -220,8 +220,8 @@ type Order struct {
 		ApiSpecName       string  `json:"api_spec_name"`                 // 平台规格名称
 		ApiGoodsId        string  `json:"api_goods_id"`                  // 平台货品id
 		ApiSpecId         string  `json:"api_spec_id"`                   // 平台规格id
-		GoodsId           int     `json:"goods_id"`                      // 货品id
-		SpecId            int     `json:"spec_id"`                       // 单品id
+		GoodsId           int64   `json:"goods_id"`                      // 货品id
+		SpecId            int64   `json:"spec_id"`                       // 单品id
 		Commission        float64 `json:"commission,omitempty"`          // 佣金
 		GoodsType         int     `json:"goods_type"`                    // 货品类型
 		FromMask          int     `json:"from_mask"`                     // 订单内部来源
@@ -240,7 +240,7 @@ type Order struct {
 		ActualNum         float64 `json:"actual_num"`                    // 实发数量
 		Barcode           string  `json:"barcode"`                       // 条码
 		Paid              float64 `json:"paid,omitempty"`                // 已付
-		SuiteId           int     `json:"suite_id"`                      // 组合装id
+		SuiteId           int64   `json:"suite_id"`                      // 组合装id
 		BindOid           string  `json:"bind_oid,omitempty"`            //Bind_oid
 		PrintSuiteMode    int     `json:"print_suite_mode,omitempty"`    // 打印组合装
 		Flag              int     `json:"flag"`                          // 天猫物流升级信息
